@@ -1,0 +1,36 @@
+{
+  "name": "angular-formly-rest",
+  "version": "0.0.0",
+  "description": "Angular-formly wrapper for Django REST framework.",
+  "main": "dist/django-rest.js",
+  "keywords": [
+    "django",
+    "rest",
+    "framework",
+    "angular",
+    "angularjs",
+    "formly",
+    "forms",
+    "angular-formly",
+    "angular-formly-rest"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-inject": "~3.0.0",
+    "event-stream": "~3.3.2",
+    "del": "~2.1.0",
+    "gulp-filter": "~3.0.1",
+    "gulp-util": "~3.0.7",
+    "gulp-git": "~1.6.0",
+    "gulp": "~3.9.0",
+    "gulp-tag-version": "~1.3.0",
+    "requirejs": "~2.1.22",
+    "gulp-bump": "~1.0.0",
+    "inquirer": "~0.11.0",
+    "gulp-concat": "~2.6.0",
+    "gulp-typescript": "~2.10.0",
+    "typescript": "~1.7.3",
+    "bower": "~1.6.8"
+  }
+}

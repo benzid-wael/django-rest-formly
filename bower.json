@@ -1,0 +1,39 @@
+{
+  "name": "angular-formly-rest",
+  "version": "0.0.0",
+  "authors": [
+    "Wael BEN ZID <benzid.wael@hotmail.fr>"
+  ],
+  "description": "Angular-formly wrapper for Django REST framework.",
+  "main": "dist/django-rest.js",
+  "keywords": [
+    "django",
+    "rest",
+    "framework",
+    "angular",
+    "angularjs",
+    "formly",
+    "forms",
+    "angular-formly",
+    "angular-formly-rest"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "example",
+    "src",
+    "docs",
+    ".gitignore",
+    ".jshintrc",
+    "bower.json",
+    "Gulpfile.js",
+    "package.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "DefinitelyTyped": "*"
+  }
+}

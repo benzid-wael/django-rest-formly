@@ -11,7 +11,8 @@ var gulp = require('gulp'),
   git = require('gulp-git'),
   filter = require('gulp-filter'),
   tagVersion = require('gulp-tag-version'),
-  inquirer = require('inquirer');
+  inquirer = require('inquirer'),
+  typedoc = require("gulp-typedoc");
 
 var sources = {
   app: {
@@ -20,7 +21,8 @@ var sources = {
 };
 
 var destinations = {
-  js: './dist/'
+  js: './dist/',
+  docs: './docs/'
 };
 
 gulp.task('js:app', function() {
@@ -52,6 +54,30 @@ gulp.task('clean', function() {
 gulp.task('build', [
   'js:app'
 ]);
+
+gulp.task("typedoc", function() {
+    return gulp
+        .src(sources.app.ts)
+        .pipe(typedoc({
+            // TypeScript options (see typescript docs)
+            module: "commonjs",
+            target: "es5",
+            includeDeclarations: true,
+
+            // Output options (see typedoc docs)
+            out: destinations.docs,
+            json: destinations.docs + 'docs.json',
+
+            // TypeDoc options (see typedoc docs)
+            name: "angular-formly-rest",
+            readme: "README.md",
+            // theme: "/path/to/my/theme",
+            // plugins: ["my", "plugins"],
+            ignoreCompilerErrors: false,
+            version: true,
+        }))
+    ;
+});
 
 gulp.task('bump', function() {
 

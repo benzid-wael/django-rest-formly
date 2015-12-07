@@ -1,4 +1,8 @@
+
 bower_components
 example/bower_components
 node_modules
 docs
+
+# idea
+.idea/

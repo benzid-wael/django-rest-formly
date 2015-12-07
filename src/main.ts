@@ -1,9 +1,13 @@
+/**
+ * AngularFormlyRest main module and namespace.
+ * @preferred
+ */
 module AngularFormlyRest {
 
-  export class Convertor {
+  export class Converter {
 
     constructor() {
-      alert('Welcome Django developers in Angular World!');
+      console.debug('Welcome Django developers to Angular World!');
     }
   }
 }

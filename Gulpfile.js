@@ -16,24 +16,30 @@ var gulp = require('gulp'),
 
 var sources = {
   app: {
-    ts: ['./src/**/*.ts'],
+    ts: ['./src/**/*.ts', './typings/**/*.ts'],
   }
 };
 
 var destinations = {
-  js: './dist/',
+  js: './dist/js',
+  definitions: './dist/definitions',
   docs: './docs/'
 };
 
+var tsProject = ts.createProject({
+  target: 'ES5',
+  declarationFiles: true,
+  noExternalResolve: true,
+  module: 'commonjs',
+  removeComments: false
+});
+
 gulp.task('js:app', function() {
   var tsStream = gulp.src(sources.app.ts)
-    .pipe(ts({
-      declarationFiles: false,
-      noExternalResolve: true
-    }));
+        .pipe(ts(tsProject));
 
   es.merge(
-    tsStream.dts.pipe(gulp.dest(destinations.js)),
+    tsStream.dts.pipe(gulp.dest(destinations.definitions)),
     tsStream.js
     .pipe(concat('django-rest.js'))
     .pipe(gulp.dest(destinations.js))

@@ -6,3 +6,8 @@ docs
 
 # idea
 .idea/
+
+# generated files
+src/*.js
+src/*.js.map
+typings/

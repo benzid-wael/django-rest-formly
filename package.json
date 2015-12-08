@@ -32,6 +32,7 @@
     "gulp-typescript": "~2.10.0",
     "typescript": "~1.7.3",
     "bower": "~1.6.8",
-    "gulp-typedoc": "~1.2.1"
+    "gulp-typedoc": "~1.2.1",
+    "gulp-yuidoc": "~0.1.2"
   }
 }

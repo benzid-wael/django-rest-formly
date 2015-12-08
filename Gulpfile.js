@@ -12,11 +12,13 @@ var gulp = require('gulp'),
   filter = require('gulp-filter'),
   tagVersion = require('gulp-tag-version'),
   inquirer = require('inquirer'),
-  typedoc = require("gulp-typedoc");
+  typedoc = require("gulp-typedoc"),
+  yuidoc = require("gulp-yuidoc");
 
 var sources = {
   app: {
     ts: ['./src/**/*.ts', './typings/**/*.ts'],
+    projectFiles: ['./src/**/*.ts', '!./src/_all.ts']
   }
 };
 
@@ -61,14 +63,22 @@ gulp.task('build', [
   'js:app'
 ]);
 
+gulp.task("yuidoc", function() {
+    return gulp
+        .src(sources.app.projectFiles)
+        .pipe(yuidoc())
+        .pipe(gulp.dest(destinations.docs));
+});
+
 gulp.task("typedoc", function() {
     return gulp
-        .src(sources.app.ts)
+        .src(sources.app.projectFiles)
         .pipe(typedoc({
             // TypeScript options (see typescript docs)
             module: "commonjs",
             target: "es5",
             includeDeclarations: true,
+            mode: "modules",
 
             // Output options (see typedoc docs)
             out: destinations.docs,

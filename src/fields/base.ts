@@ -2,6 +2,8 @@
 
 import AngularFormly = require('angular-formly');
 
+import utils = require('../utils');
+
 
 // WONTFIX Missing field in ITemplateOptions, see: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7088
 export interface ITemplateOptions extends AngularFormly.ITemplateOptions {
@@ -17,7 +19,7 @@ export interface IDjangoRestFieldOptions {
   /**
    * Django REST field type.
    */
-      type: string; // FIXME this is too generic
+  type: string; // FIXME this is too generic
 
   /**
    * Is this field required?
@@ -98,19 +100,25 @@ export interface IField {
   choices?: Array<Object>; // FIXME this is too generic
 }
 
+/**
+ * Base class for all fields.
+ */
 export class Field implements IField {
+  // TODO check supporting options according to angular-formly documentation
+  // See: https://www.omniref.com/js/npm/angular-formly/1.0.0
 
-  protected templateOptions:ITemplateOptions;
-
-  name:string;
-  /**
-   * Specifies the type of field to be rendered, e.g: password, email, etc.
-   */
-  protected type:string;
+  protected __class__: typeof Field;  // Explicitly declare constructor property
   /**
    * Specifies HTML type, e.g: input, checkbox, etc.
    */
-  protected htmlType:string;
+  protected static fieldType: string;
+  /**
+   * Specifies the type of field to be rendered, e.g: password, email, etc.
+   */
+  protected static templateType: string;
+  protected templateOptions:ITemplateOptions;
+
+  name:string;
   required:boolean;
   readOnly:boolean;
   label:string;
@@ -122,18 +130,21 @@ export class Field implements IField {
    * @param options  The field metadata.
    */
   constructor(options:IDjangoRestFieldOptions) {
-    this.name = options.name;
-    // this.htmlType = options.type;
+    this.name     = options.name;
     this.readOnly = options.read_only || false;
     this.label    = options.label || this.name;
     this.helpText = options.help_text;
     this.choices  = options.choices;
   }
 
+  protected getExtraTemplateOptions() {
+    return {};
+  }
+
   private getTemplateOptions() {
     var tplOptions:ITemplateOptions = {
       label   : this.label,
-      type    : this.type,
+      type    : this.__class__.templateType,
       required: this.required,
       disabled: this.readOnly
     };
@@ -148,6 +159,7 @@ export class Field implements IField {
         });
       });
     }
+    utils.extend(tplOptions, this.getExtraTemplateOptions());
     return tplOptions;
   }
 
@@ -156,7 +168,7 @@ export class Field implements IField {
    */
   public getConfigurationObject() {
     var configurationObject:AngularFormly.IFieldConfigurationObject = {
-      type           : this.htmlType,
+      type           : this.__class__.fieldType,
       key            : this.name,
       templateOptions: this.getTemplateOptions()
     };

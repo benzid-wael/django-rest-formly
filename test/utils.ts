@@ -45,6 +45,12 @@ describe("Module Utils' Unit Tests:", () => {
           chai.assert(res.b === 6, "nothing is lost!");
             done();
         });
+        it('should include null properties', (done) => {
+          var res = utils.extend({a: 1}, {b: null});
+          chai.assert.property(res, 'b', "null property included");
+          chai.assert.isNull(res.b);
+            done();
+        });
         it('should update destination', (done) => {
           var dest = {a: 1};
           var res = utils.extend(dest, {a: 4, b: 6}, {a: 5});

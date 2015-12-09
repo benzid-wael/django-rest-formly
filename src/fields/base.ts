@@ -1,4 +1,4 @@
-/// <reference path="../_all.ts" />
+/// <reference path="../_all.d.ts" />
 
 import AngularFormly = require('angular-formly');
 

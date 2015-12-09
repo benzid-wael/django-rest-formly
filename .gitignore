@@ -8,6 +8,6 @@ docs
 .idea/
 
 # generated files
-src/*.js
-src/*.js.map
+src/**/*.js
+src/**/*.js.map
 typings/

@@ -107,7 +107,7 @@ export class Field implements IField {
   // TODO check supporting options according to angular-formly documentation
   // See: https://www.omniref.com/js/npm/angular-formly/1.0.0
 
-  protected __class__: typeof Field;  // Explicitly declare constructor property
+  "constructor": typeof Field;  // Explicitly declare constructor property
   /**
    * Specifies HTML type, e.g: input, checkbox, etc.
    */
@@ -131,6 +131,7 @@ export class Field implements IField {
    */
   constructor(options:IDjangoRestFieldOptions) {
     this.name     = options.name;
+    this.required = options.required || false;
     this.readOnly = options.read_only || false;
     this.label    = options.label || this.name;
     this.helpText = options.help_text;
@@ -144,7 +145,7 @@ export class Field implements IField {
   private getTemplateOptions() {
     var tplOptions:ITemplateOptions = {
       label   : this.label,
-      type    : this.__class__.templateType,
+      type    : this.constructor.templateType,
       required: this.required,
       disabled: this.readOnly
     };
@@ -159,8 +160,7 @@ export class Field implements IField {
         });
       });
     }
-    utils.extend(tplOptions, this.getExtraTemplateOptions());
-    return tplOptions;
+    return utils.smartExtend({}, tplOptions, this.getExtraTemplateOptions());
   }
 
   /*
@@ -168,7 +168,7 @@ export class Field implements IField {
    */
   public getConfigurationObject() {
     var configurationObject:AngularFormly.IFieldConfigurationObject = {
-      type           : this.__class__.fieldType,
+      type           : this.constructor.fieldType,
       key            : this.name,
       templateOptions: this.getTemplateOptions()
     };

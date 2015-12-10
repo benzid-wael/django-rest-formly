@@ -1,19 +1,24 @@
 /*jslint node: true */ // allow 'require' global
 'use strict';
 
-var gulp = require('gulp'),
-  concat = require('gulp-concat'),
-  del = require('del'),
-  util = require('gulp-util'),
-  es = require('event-stream'),
-  ts = require('gulp-typescript'),
-  bump = require('gulp-bump'),
-  git = require('gulp-git'),
-  filter = require('gulp-filter'),
-  tagVersion = require('gulp-tag-version'),
-  inquirer = require('inquirer'),
-  typedoc = require("gulp-typedoc"),
-  yuidoc = require("gulp-yuidoc");
+var gulp       = require('gulp'),
+  concat       = require('gulp-concat'),
+  del          = require('del'),
+  util         = require('gulp-util'),
+  es           = require('event-stream'),
+  ts           = require('gulp-typescript'),
+  bump         = require('gulp-bump'),
+  git          = require('gulp-git'),
+  filter       = require('gulp-filter'),
+  tagVersion   = require('gulp-tag-version'),
+  inquirer     = require('inquirer'),
+  browserify   = require('browserify'),
+  tsify        = require('tsify'),
+  buffer       = require('vinyl-buffer'),
+  source       = require('vinyl-source-stream'),
+  mocha        = require("gulp-mocha"),
+  typedoc      = require("gulp-typedoc"),
+  yuidoc       = require("gulp-yuidoc");
 
 var sources = {
   app: {
@@ -38,11 +43,19 @@ var tsProject = ts.createProject({
 
 gulp.task('js:app', function() {
   var tsStream = gulp.src(sources.app.ts)
-        .pipe(ts(tsProject));
+        .pipe(ts(tsProject)),
+      browserifyStream;
+
+  browserifyStream = browserify('./src/main.ts')
+    .plugin(tsify, { noImplicitAny: true })
+    .bundle()
+    .on('error', function (error) { console.error(error.toString()); })
+    .pipe(source('main.ts'))
+    .pipe(buffer());
 
   es.merge(
     tsStream.dts.pipe(gulp.dest(destinations.definitions)),
-    tsStream.js
+    browserifyStream
     .pipe(concat('django-rest.js'))
     .pipe(gulp.dest(destinations.js))
   );

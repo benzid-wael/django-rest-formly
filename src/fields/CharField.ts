@@ -2,6 +2,7 @@
 
 import base = require('./base');
 import utils = require('../utils');
+import interfaces = require('../interfaces');
 
 
 /**
@@ -40,7 +41,7 @@ export class CharField extends base.Field implements ICharField {
   minLength: number;
   maxLength: number;
 
-  constructor(options: base.IDjangoRestFieldOptions) {
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
     this.minLength = options.min_length;
     this.maxLength = options.max_length;
     super(options);
@@ -61,7 +62,7 @@ export class TextField extends CharField implements ITextField {
   protected static templateType: string = null;
   rows: number;
 
-  constructor(options: base.IDjangoRestFieldOptions) {
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
     this.rows = 2;  // default angular-formly value
     super(options);
   }

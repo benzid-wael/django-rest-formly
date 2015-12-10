@@ -1,7 +1,8 @@
 "use strict";
 
 import base = require('./base');
-import utils = require('../utils');
+import utils = require('../utils')
+import interfaces = require('../interfaces');
 
 
 /**
@@ -12,7 +13,7 @@ export interface IChoiceField extends base.IField {
   /**
    * List of accepted values.
    */
-  choices: Array<base.IOption>;
+  choices: Array<interfaces.IOption>;
 }
 
 
@@ -22,10 +23,10 @@ export interface IChoiceField extends base.IField {
 export abstract class ChoiceField extends base.Field implements IChoiceField {
 
   protected static templateType: string = null;
-  choices: Array<base.IOption>;
+  choices: Array<interfaces.IOption>;
 
-  constructor(options: base.IDjangoRestFieldOptions) {
-    this.choices = <Array<base.IOption>> options.choices;
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
+    this.choices = <Array<interfaces.IOption>> options.choices;
     super(options);
   }
 

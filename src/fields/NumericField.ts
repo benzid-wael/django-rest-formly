@@ -3,6 +3,7 @@
 
 import base = require('./base');
 import utils = require('../utils');
+import interfaces = require('../interfaces');
 
 
 export interface INumericField extends base.IField {
@@ -26,7 +27,7 @@ export class NumericField extends base.Field implements INumericField {
   minValue: number;
   maxValue: number;
 
-  constructor(options: base.IDjangoRestFieldOptions) {
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
     this.minValue = options.min_value;
     this.minValue = options.max_value;
     super(options);

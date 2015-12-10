@@ -1,9 +1,8 @@
-module AngularFormlyRest {
+/**
+ * AngularFormlyRest main module.
+ * @preferred
+ */
 
-  export class Convertor {
+export class Converter {
 
-    constructor() {
-      alert('Welcome Django developers in Angular World!');
-    }
-  }
 }

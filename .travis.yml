@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - 5.0.0
+
+before_install:
+  - npm install -g gulp tsd mocha
+  - ./setup.sh
+
+notifications:
+  email: false

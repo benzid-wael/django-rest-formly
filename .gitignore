@@ -1,4 +1,15 @@
+
 bower_components
 example/bower_components
 node_modules
 docs
+
+# idea
+.idea/
+
+# generated files
+src/**/*.js
+src/**/*.js.map
+test/**/*.js
+test/**/*.js.map
+typings/

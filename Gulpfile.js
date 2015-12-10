@@ -12,28 +12,36 @@ var gulp = require('gulp'),
   filter = require('gulp-filter'),
   tagVersion = require('gulp-tag-version'),
   inquirer = require('inquirer'),
-  typedoc = require("gulp-typedoc");
+  typedoc = require("gulp-typedoc"),
+  yuidoc = require("gulp-yuidoc");
 
 var sources = {
   app: {
-    ts: ['./src/**/*.ts'],
+    ts: ['./src/**/*.ts', './typings/**/*.ts'],
+    projectFiles: ['./src/**/*.ts', '!./src/_all.ts']
   }
 };
 
 var destinations = {
-  js: './dist/',
+  js: './dist/js',
+  definitions: './dist/definitions',
   docs: './docs/'
 };
 
+var tsProject = ts.createProject({
+  target: 'ES5',
+  declarationFiles: true,
+  noExternalResolve: true,
+  module: 'commonjs',
+  removeComments: false
+});
+
 gulp.task('js:app', function() {
   var tsStream = gulp.src(sources.app.ts)
-    .pipe(ts({
-      declarationFiles: false,
-      noExternalResolve: true
-    }));
+        .pipe(ts(tsProject));
 
   es.merge(
-    tsStream.dts.pipe(gulp.dest(destinations.js)),
+    tsStream.dts.pipe(gulp.dest(destinations.definitions)),
     tsStream.js
     .pipe(concat('django-rest.js'))
     .pipe(gulp.dest(destinations.js))
@@ -55,14 +63,22 @@ gulp.task('build', [
   'js:app'
 ]);
 
+gulp.task("yuidoc", function() {
+    return gulp
+        .src(sources.app.projectFiles)
+        .pipe(yuidoc())
+        .pipe(gulp.dest(destinations.docs));
+});
+
 gulp.task("typedoc", function() {
     return gulp
-        .src(sources.app.ts)
+        .src(sources.app.projectFiles)
         .pipe(typedoc({
             // TypeScript options (see typescript docs)
             module: "commonjs",
             target: "es5",
             includeDeclarations: true,
+            mode: "modules",
 
             // Output options (see typedoc docs)
             out: destinations.docs,

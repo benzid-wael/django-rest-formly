@@ -10,6 +10,12 @@ export interface ITemplateOptions extends AngularFormly.ITemplateOptions {
   options?: Array<Object>;
 }
 
+export interface IOption {
+  name: string;
+  value?: string;
+  group?: string; // TODO handle it properly
+}
+
 export interface IDjangoRestFieldOptions {
   /**
    * Field's name.
@@ -44,7 +50,7 @@ export interface IDjangoRestFieldOptions {
   /**
    * List of accepted values.
    */
-  choices?: Array<Object>;
+  choices?: Array<IOption>;
 
   /**
    * The minimum length (in characters) of the field.
@@ -93,11 +99,6 @@ export interface IField {
    * Extra "help" text to be displayed in the form.
    */
   helpText?: string;
-
-  /**
-   * List of accepted values.
-   */
-  choices?: Array<Object>; // FIXME this is too generic
 }
 
 /**
@@ -149,17 +150,6 @@ export class Field implements IField {
       required: this.required,
       disabled: this.readOnly
     };
-    // FIXME maybe it's better to move this code to SelectField
-    if (!this.readOnly && this.choices) {
-      tplOptions.type    = 'select';
-      tplOptions.options = [];
-      this.choices.forEach(function (choice) {
-        tplOptions.options.push({
-          name : choice['display_name'],
-          value: choice['value']
-        });
-      });
-    }
     return utils.smartExtend({}, tplOptions, this.getExtraTemplateOptions());
   }
 

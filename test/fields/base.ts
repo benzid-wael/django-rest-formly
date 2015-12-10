@@ -99,45 +99,6 @@ describe("Field's Unit Tests:", () => {
       expect(field.getConfigurationObject()).to.deep.equal(expected);
         done();
     });
-
-    it('provide choices attribute', (done) => {
-      var rest_meta = {
-          name: "status",
-          choices: [
-            {
-              display_name: "Active",
-              value: "active"
-            },
-            {
-              display_name: "Pending",
-              value: "pending"
-            }
-          ]
-        },
-        field       = new Field(rest_meta),
-        expected    = {
-          type: 'input',
-          key: 'status',
-          templateOptions: {
-            label: 'status',
-            type: 'select',
-            disabled: false,
-            required: false,
-            options: [
-              {
-                name: "Active",
-                value: "active"
-              },
-              {
-                name: "Pending",
-                value: "pending"
-              }
-            ]
-          }
-        };
-      expect(field.getConfigurationObject()).to.deep.equal(expected);
-        done();
-    });
   });
 
   describe("Extra template Options", () => {

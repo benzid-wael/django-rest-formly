@@ -19,7 +19,7 @@ export interface IChoiceField extends base.IField {
 /**
  * Base ChoiceField class.
  */
-class ChoiceField extends base.Field implements IChoiceField {
+export abstract class ChoiceField extends base.Field implements IChoiceField {
 
   protected static templateType: string = null;
   choices: Array<base.IOption>;

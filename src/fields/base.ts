@@ -167,3 +167,32 @@ export class Field implements IField {
     return configurationObject;
   }
 }
+
+
+/**
+ * BooleanField class will be represented by a `checkbox` input.
+ * It does not have any custom attributes.
+ */
+export class BooleanField extends Field {
+
+  protected static fieldType: string = 'checkbox';
+  protected static templateType: string = null;
+}
+
+export class EmailField extends Field {
+
+  protected static fieldType: string = 'email';
+  protected static templateType: string = null;
+}
+
+export class PasswordField extends Field {
+
+  protected static fieldType: string = 'password';
+  protected static templateType: string = null;
+}
+
+export class HiddenField extends Field {
+
+  protected static fieldType: string = 'hidden';
+  protected static templateType: string = null;
+}

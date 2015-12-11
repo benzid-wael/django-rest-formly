@@ -1,4 +1,5 @@
-# Angular-formly wrapper for Django REST framework.
+# Angular-formly wrapper for Django REST framework. [![Build Status](https://travis-ci.org/benzid-wael/angular-formly-rest.svg)](https://travis-ci.org/benzid-wael/angular-formly-rest) [![Dependency Status](https://david-dm.org/benzid-wael/angular-formly-rest.png?theme=shields.io)](https://david-dm.org/benzid-wael/angular-formly-rest)
+
 
 ## Usage
 

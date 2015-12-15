@@ -2,6 +2,9 @@
  * angular-formly-rest utilities.
  */
 
+export interface IObject {
+    [key:string]:any;
+}
 /**
  * Copy all of the properties in the source objects over to the destination
  * object, and return the destination object.
@@ -10,7 +13,7 @@
  * @param sources
  * @returns {Object}
  */
-export function extend(destination: Object, ...sources: Array<Object>): Object {
+export function extend(destination: IObject, ...sources: Array<IObject>): Object {
   sources.forEach(function(source) {
     for (var p in source) {
       destination[p] = source[p];
@@ -27,7 +30,7 @@ export function extend(destination: Object, ...sources: Array<Object>): Object {
  * @param sources
  * @returns {Object}
  */
-export function smartExtend(destination: Object, ...sources: Array<Object>): Object {
+export function smartExtend(destination: IObject, ...sources: Array<IObject>): Object {
   sources.forEach(function(source) {
     for (var p in source) {
       if (source[p] !== null && source[p] !== undefined) {

@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {},
   "scripts": {
+    "pretest": "tsc test/**/*.ts test/*.ts src/**/*.ts --module commonjs",
     "test": "mocha --recursive"
   },
   "devDependencies": {

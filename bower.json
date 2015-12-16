@@ -1,6 +1,6 @@
 {
   "name": "angular-formly-rest",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
     "Wael BEN ZID <benzid.wael@hotmail.fr>"
   ],
@@ -33,6 +33,5 @@
     "package.json",
     "README.md"
   ],
-  "dependencies": {
-  }
+  "dependencies": {}
 }

@@ -32,7 +32,7 @@ export class Converter {
 }
 
 
-export function DjangoRestFrameworkAdapter(djangoRestMeta: Array<IDjangoRestFieldOptions>, fieldFactoryFn?: IFieldFactory) {
+export var DjangoRestFrameworkAdapter = function DjangoRestFrameworkAdapterF(djangoRestMeta: Array<IDjangoRestFieldOptions>, fieldFactoryFn?: IFieldFactory) {
   var converter = new Converter(djangoRestMeta, fieldFactoryFn);
   return converter.convert();
 }

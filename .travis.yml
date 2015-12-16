@@ -4,6 +4,7 @@ node_js:
 
 before_install:
   - npm install -g gulp tsd mocha
+  - tsd install && bower install
   - ./setup.sh
 
 notifications:

@@ -25,8 +25,9 @@ var djnagoRestFieldLookup = [
   (djangoRestMeta:IDjangoRestFieldOptions) => {
     if (djangoRestMeta.type == "string" && djangoRestMeta.max_length == undefined) {
       return "text";
+    } else if (djangoRestMeta.type == "string") {
+      return "string";
     }
-    return "string";
   }
 ];
 
@@ -79,7 +80,7 @@ export class DjangoRestConfig {
    * @returns {any}
      */
   static factory(djangoRestMeta:IDjangoRestFieldOptions,
-          factoryFn:IFieldFactory): Field {
+          factoryFn?:IFieldFactory): Field {
     var field_class_string: Field|string = null,
         // FIXME if we define fieldClass with Field type, we got: TS2351 error
         //       Cannot use 'new' with an expression whose type lacks a call or construct signature.
@@ -97,6 +98,10 @@ export class DjangoRestConfig {
           break;
         }
       }
+    }
+
+    if (!field_class_string) {
+      field_class_string = djangoRestMeta.type;
     }
 
     if (typeof field_class_string === "string") {

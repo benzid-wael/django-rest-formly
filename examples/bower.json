@@ -4,6 +4,10 @@
   "main": "index.html",
   "private": true,
   "dependencies": {
-    "angular-formly-rest": "~0.0.0"
+    "angular-formly-rest": "~0.0.0",
+    "angular": "~1.4.7",
+    "angular-formly": "~6.16.1",
+    "api-check": "~7.5.0",
+    "angular-formly-templates-bootstrap": "~4.4.0"
   }
 }

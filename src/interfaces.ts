@@ -5,6 +5,12 @@ export interface IOption {
   group?: string; // TODO handle it properly
 }
 
+export interface IDjangoRestOption {
+  display_name: string;
+  value: string;
+}
+
+
 export interface IDjangoRestFieldOptions {
   /**
    * Field's name.
@@ -39,7 +45,7 @@ export interface IDjangoRestFieldOptions {
   /**
    * List of accepted values.
    */
-  choices?: Array<IOption>;
+  choices?: Array<IDjangoRestOption>;
 
   /**
    * The minimum length (in characters) of the field.

@@ -1,10 +1,62 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <script src="bower_components/angular-formly-rest/dist/django-rest.js"></script>
-  <script>
-    AngularFormlyRest.Convertor();
-  </script>
+  <!-- Twitter bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+  <style>
+    body {
+      margin: 20px
+    }
+
+    .formly-field {
+      margin-bottom:16px;
+    }
+  </style>
+
+  <script src="bower_components/api-check/dist/api-check.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-formly/dist/formly.js"></script>
+  <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.min.js"></script>
+  <script src="bower_components/angular-formly-rest/dist/js/django-rest.js"></script>
+  <script src="js/app.js"></script>
+  <title>Django Rest Formly Example</title>
 </head>
-<body>
+
+<body ng-app="djangoRestFormlyExample" ng-controller="MainCtrl as vm">
+
+  <div>
+      <h1>django-rest-formly example: {{::vm.exampleTitle}}</h1>
+      <div>
+        This is a small subset of the things that formly can do :-)
+        See the documentation for more.
+      </div>
+      <br />
+
+      <form ng-submit="vm.onSubmit()" name="vm.form" novalidate>
+        <formly-form model="vm.model" fields="vm.fields" options="vm.options" form="vm.form">
+          <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
+          <button type="button" class="btn btn-default" ng-click="vm.options.resetModel()">Reset</button>
+        </formly-form>
+      </form>
+
+      <div style="margin-top:30px">
+        <small>
+          This is an example for the
+          <a href="https://benzid-wael.github.io/django-rest-formly">django-rest-formly</a>
+          project made with &hearts; by
+          <strong>
+            <span ng-if="!vm.author.name || !vm.author.url">
+              {{vm.author.name || 'anonymous'}}
+            </span>
+            <a ng-if="vm.author.url" ng-href="{{::vm.author.url}}">
+              {{vm.author.name}}
+            </a>
+          </strong>
+                  <br />
+          This example is running angular version "{{vm.env.angularVersion}}" and formly version "{{vm.env.formlyVersion}}"
+        </small>
+      </div>
+  </div>
+
 </body>
 </html>

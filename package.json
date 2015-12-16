@@ -1,6 +1,6 @@
 {
   "name": "angular-formly-rest",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Angular-formly wrapper for Django REST framework.",
   "main": "dist/django-rest.js",
   "keywords": [

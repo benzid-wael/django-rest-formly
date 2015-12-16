@@ -20,6 +20,7 @@ var gulp       = require('gulp'),
   typedoc      = require("gulp-typedoc"),
   yuidoc       = require("gulp-yuidoc");
 
+
 var sources = {
   app: {
     ts: ['./src/**/*.ts', './typings/**/*.ts'],
@@ -33,20 +34,34 @@ var destinations = {
   docs: './docs/'
 };
 
+/**
+ * Project configuration for definitions files.
+ *
+ * @type {"gulp-typescript".GulpTypescript.Project|*}
+ */
 var tsProject = ts.createProject({
   target: 'ES5',
   declarationFiles: true,
   noExternalResolve: true,
   module: 'commonjs',
-  removeComments: false
+  removeComments: false,
+  noImplicitAny: true,
+  insertGlobal: true
 });
 
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
 gulp.task('js:app', function() {
   var tsStream = gulp.src(sources.app.ts)
         .pipe(ts(tsProject)),
       browserifyStream;
 
-  browserifyStream = browserify('./src/main.ts')
+  browserifyStream = browserify('./src/main.ts', {
+      //insertGlobals : true,
+      debug : false,
+      standalone : "DjangoRestFormly"
+    })
     .plugin(tsify, { noImplicitAny: true })
     .bundle()
     .on('error', function (error) { console.error(error.toString()); })
@@ -74,6 +89,7 @@ gulp.task('clean', function() {
 
 gulp.task('build', [
   'js:app'
+  //'compile-ts'
 ]);
 
 gulp.task("yuidoc", function() {

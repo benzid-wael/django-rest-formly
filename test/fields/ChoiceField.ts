@@ -8,6 +8,7 @@ import chai = require('chai');
 import _ = require('underscore');
 
 import fields = require('../../src/fields/ChoiceField');
+import {IDjangoRestFieldOptions} from "../../src/interfaces";
 
 /**
  * Globals
@@ -21,8 +22,10 @@ var expect = chai.expect;
  */
 describe("ChoiceField Unit Tests:", () => {
 
-  var rest_meta = {
+  var rest_meta : IDjangoRestFieldOptions= {
     name: "status",
+    type: "choice",
+    required: false,
     choices: [
       {
         display_name: "Active",
@@ -34,8 +37,10 @@ describe("ChoiceField Unit Tests:", () => {
       }
     ]
   },
-    without_choices = {
-      name: "status"
+    without_choices : IDjangoRestFieldOptions = {
+      name: "status",
+      type: "choice",
+      required: false,
     };
 
   describe('RadioField construction', () => {

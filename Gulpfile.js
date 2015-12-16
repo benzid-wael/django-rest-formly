@@ -1,38 +1,76 @@
 /*jslint node: true */ // allow 'require' global
 'use strict';
 
-var gulp = require('gulp'),
-  concat = require('gulp-concat'),
-  del = require('del'),
-  util = require('gulp-util'),
-  es = require('event-stream'),
-  ts = require('gulp-typescript'),
-  bump = require('gulp-bump'),
-  git = require('gulp-git'),
-  filter = require('gulp-filter'),
-  tagVersion = require('gulp-tag-version'),
-  inquirer = require('inquirer');
+var gulp       = require('gulp'),
+  concat       = require('gulp-concat'),
+  del          = require('del'),
+  util         = require('gulp-util'),
+  es           = require('event-stream'),
+  ts           = require('gulp-typescript'),
+  bump         = require('gulp-bump'),
+  git          = require('gulp-git'),
+  filter       = require('gulp-filter'),
+  tagVersion   = require('gulp-tag-version'),
+  inquirer     = require('inquirer'),
+  browserify   = require('browserify'),
+  tsify        = require('tsify'),
+  buffer       = require('vinyl-buffer'),
+  source       = require('vinyl-source-stream'),
+  mocha        = require("gulp-mocha"),
+  typedoc      = require("gulp-typedoc"),
+  yuidoc       = require("gulp-yuidoc");
+
 
 var sources = {
   app: {
-    ts: ['./src/**/*.ts'],
+    ts: ['./src/**/*.ts', './typings/**/*.ts'],
+    projectFiles: ['./src/**/*.ts', '!./src/_all.ts']
   }
 };
 
 var destinations = {
-  js: './dist/'
+  js: './dist/js',
+  definitions: './dist/definitions',
+  docs: './docs/'
 };
 
+/**
+ * Project configuration for definitions files.
+ *
+ * @type {"gulp-typescript".GulpTypescript.Project|*}
+ */
+var tsProject = ts.createProject({
+  target: 'ES5',
+  declarationFiles: true,
+  noExternalResolve: true,
+  module: 'commonjs',
+  removeComments: false,
+  noImplicitAny: true,
+  insertGlobal: true
+});
+
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
 gulp.task('js:app', function() {
   var tsStream = gulp.src(sources.app.ts)
-    .pipe(ts({
-      declarationFiles: false,
-      noExternalResolve: true
-    }));
+        .pipe(ts(tsProject)),
+      browserifyStream;
+
+  browserifyStream = browserify('./src/main.ts', {
+      //insertGlobals : true,
+      debug : false,
+      standalone : "DjangoRestFormly"
+    })
+    .plugin(tsify, { noImplicitAny: true })
+    .bundle()
+    .on('error', function (error) { console.error(error.toString()); })
+    .pipe(source('main.ts'))
+    .pipe(buffer());
 
   es.merge(
-    tsStream.dts.pipe(gulp.dest(destinations.js)),
-    tsStream.js
+    tsStream.dts.pipe(gulp.dest(destinations.definitions)),
+    browserifyStream
     .pipe(concat('django-rest.js'))
     .pipe(gulp.dest(destinations.js))
   );
@@ -51,7 +89,40 @@ gulp.task('clean', function() {
 
 gulp.task('build', [
   'js:app'
+  //'compile-ts'
 ]);
+
+gulp.task("yuidoc", function() {
+    return gulp
+        .src(sources.app.projectFiles)
+        .pipe(yuidoc())
+        .pipe(gulp.dest(destinations.docs));
+});
+
+gulp.task("typedoc", function() {
+    return gulp
+        .src(sources.app.projectFiles)
+        .pipe(typedoc({
+            // TypeScript options (see typescript docs)
+            module: "commonjs",
+            target: "es5",
+            includeDeclarations: true,
+            mode: "modules",
+
+            // Output options (see typedoc docs)
+            out: destinations.docs,
+            json: destinations.docs + 'docs.json',
+
+            // TypeDoc options (see typedoc docs)
+            name: "angular-formly-rest",
+            readme: "README.md",
+            // theme: "/path/to/my/theme",
+            // plugins: ["my", "plugins"],
+            ignoreCompilerErrors: false,
+            version: true,
+        }))
+    ;
+});
 
 gulp.task('bump', function() {
 

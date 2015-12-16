@@ -6,10 +6,10 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "angularjs/angular.d.ts": {
-      "commit": "8cd79728efa7652d934b2703feeb68bb4802aebb"
+      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
     },
     "jquery/jquery.d.ts": {
-      "commit": "8cd79728efa7652d934b2703feeb68bb4802aebb"
+      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
     },
     "mocha/mocha.d.ts": {
       "commit": "220716d99a77df1654fb4f6cd760dc134ffa8e89"
@@ -18,6 +18,9 @@
       "commit": "220716d99a77df1654fb4f6cd760dc134ffa8e89"
     },
     "underscore/underscore.d.ts": {
+      "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
+    },
+    "angular-formly/angular-formly.d.ts": {
       "commit": "11322524f8db9cdb921427cad84cd22fe2d4f965"
     }
   }

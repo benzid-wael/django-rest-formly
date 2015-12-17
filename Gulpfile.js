@@ -30,6 +30,7 @@ var sources = {
 
 var destinations = {
   js: './dist/js',
+  filename: 'django-rest-formly',
   definitions: './dist/definitions',
   docs: './docs/'
 };
@@ -71,7 +72,7 @@ gulp.task('js:app', function() {
   es.merge(
     tsStream.dts.pipe(gulp.dest(destinations.definitions)),
     browserifyStream
-    .pipe(concat('django-rest.js'))
+    .pipe(concat(destinations.filename + '.js'))
     .pipe(gulp.dest(destinations.js))
   );
 });
@@ -114,7 +115,7 @@ gulp.task("typedoc", function() {
             json: destinations.docs + 'docs.json',
 
             // TypeDoc options (see typedoc docs)
-            name: "angular-formly-rest",
+            name: destinations.filename,
             readme: "README.md",
             // theme: "/path/to/my/theme",
             // plugins: ["my", "plugins"],

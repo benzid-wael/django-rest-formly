@@ -157,7 +157,7 @@ gulp.task('bump', function() {
               semverConfig.preid = answers.preid;
           }
 
-          return gulp.src(['./package.json', './bower.json', './examples/bower.json'])
+          return gulp.src(['./package.json', './bower.json'])
               .pipe(bump(semverConfig))
               .pipe(gulp.dest('./'))
               //.pipe(git.commit('bump patch version'))

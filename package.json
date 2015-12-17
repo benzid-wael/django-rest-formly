@@ -1,6 +1,6 @@
 {
   "name": "django-rest-formly",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert Django REST framework metadata to angular-formly scheme.",
   "main": "dist/django-rest-formly.js",
   "keywords": [

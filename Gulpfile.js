@@ -30,6 +30,7 @@ var sources = {
 
 var destinations = {
   js: './dist/js',
+  filename: 'django-rest-formly',
   definitions: './dist/definitions',
   docs: './docs/'
 };
@@ -71,7 +72,7 @@ gulp.task('js:app', function() {
   es.merge(
     tsStream.dts.pipe(gulp.dest(destinations.definitions)),
     browserifyStream
-    .pipe(concat('django-rest.js'))
+    .pipe(concat(destinations.filename + '.js'))
     .pipe(gulp.dest(destinations.js))
   );
 });
@@ -114,7 +115,7 @@ gulp.task("typedoc", function() {
             json: destinations.docs + 'docs.json',
 
             // TypeDoc options (see typedoc docs)
-            name: "angular-formly-rest",
+            name: destinations.filename,
             readme: "README.md",
             // theme: "/path/to/my/theme",
             // plugins: ["my", "plugins"],
@@ -126,24 +127,43 @@ gulp.task("typedoc", function() {
 
 gulp.task('bump', function() {
 
-  var questions = [
-    {
+  var questions = [{
       type: 'input',
       name: 'bump',
       message: 'Are you sure you want to bump the patch version? [Y/N]'
-    }
-  ];
+  }], versionQuestions = [{
+      type: 'list',
+      name: "type",
+      message: "Semver version type to bump?",
+      choices: [
+        "major",
+        "minor",
+        "patch",
+        "prerelease"
+      ],
+      default: "patch"
+  }, {
+      type: 'input',
+      name: "preid",
+      message: "Set the prerelase tag to use, e.g: [alpha|beta|rc]"
+  }];
+
 
   inquirer.prompt( questions, function( answers ) {
     if(answers.bump === 'Y') {
+      inquirer.prompt( versionQuestions, function( answers ) {
+          var semverConfig = {type : answers.type};
+          if (semverConfig.type == 'prerelease') {
+              semverConfig.preid = answers.preid;
+          }
 
-      return gulp.src(['./package.json', './bower.json'])
-          .pipe(bump({type: 'patch'}))
-          .pipe(gulp.dest('./'))
-          .pipe(git.commit('bump patch version'))
-          .pipe(filter('package.json'))  // read package.json for the new version
-          .pipe(tagVersion());           // create tag
-
+          return gulp.src(['./package.json', './bower.json'])
+              .pipe(bump(semverConfig))
+              .pipe(gulp.dest('./'))
+              //.pipe(git.commit('bump patch version'))
+              //.pipe(filter('package.json'))  // read package.json for the new version
+              //.pipe(tagVersion());           // create tag
+      });
     }
   });
 });

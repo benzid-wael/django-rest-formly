@@ -10,4 +10,7 @@
 /// <reference path="./fields/NumericField.ts" />
 /// <reference path="./fields/ChoiceField.ts" />
 
+/// <reference path="./prettyjson.d.ts" />
+
+
 

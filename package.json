@@ -20,7 +20,8 @@
   "dependencies": {
     "better-require": "0.0.3",
     "chalk": "^1.1.1",
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "prettyjson": "^1.1.3"
   },
   "bin": {
     "django-rest-formly": "./src/cli/index.js"

@@ -3,6 +3,7 @@
 import http = require("http");
 import path = require("path");
 import chalk = require("chalk");
+import prettyjson = require("prettyjson");
 
 import {DjangoRestFrameworkAdapter} from "../main";
 
@@ -44,6 +45,7 @@ export interface ICommandOptions {
   suffix      ?: string;
   outputFile  ?: string;
   indent      ?: number;
+  noColor     ?: boolean;
 }
 
 
@@ -55,6 +57,7 @@ export class DjangoRestFormlyCommand {
   suffix       : string;
   outputFile   : string;
   indent       : number;
+  noColor      : boolean;
 
   constructor (options: ICommandOptions) {
     this.host       = options.host || "127.0.0.1";
@@ -70,6 +73,17 @@ export class DjangoRestFormlyCommand {
     this.suffix     = options.suffix || '';
     this.outputFile = options.outputFile;
     this.indent     = options.indent || 4;
+    this.noColor    = options.noColor;
+  }
+
+  write(data: any) {
+    console.log(prettyjson.render(data, {
+        keysColor: 'green',
+        stringColor: 'grey',
+        numberColor: 'blue',
+        inlineArrays: true
+      }, this.indent)
+    );
   }
 
   request(options, callback) {
@@ -95,7 +109,7 @@ export class DjangoRestFormlyCommand {
         if (response.statusCode >= 500) {
           errorMessage = "Authentication failed!"
         }
-        if(200 <= response.statusCode < 400) {
+        if(200 <= response.statusCode && response.statusCode < 400) {
           try {
             JSON.parse(str);
           } catch (e) {
@@ -129,11 +143,17 @@ export class DjangoRestFormlyCommand {
       path: this.path,
       method: 'GET'
     },
-      callback: (data:string) => void;
+      callback: (data:string) => void,
+      vm = this;
+
+    console.log("Available endpoints:");
 
     callback = function(raw) {
       var data = JSON.parse(raw);
-      console.log("Available endpoints:");
+      if (!vm.noColor) {
+        return vm.write(data);
+      }
+
       for (var name in data) {
         console.log("  * " + name)
       }
@@ -150,16 +170,20 @@ export class DjangoRestFormlyCommand {
       path: path.join(this.path, endpointName),
       method: 'OPTIONS'
     },
-      callback: (data:string) => void;
+      callback: (data:string) => void,
+      jsonOptions : prettyjson.IOptions;
 
     callback = function(raw) {
       var res,
+          errMessage = " this endpoint does not accept POST request or you don't have enough permission to perform this action.",
           data = JSON.parse(raw);
       if (data.actions && data.actions.POST) {
         res = DjangoRestFrameworkAdapter(data.actions.POST);
-        console.log(res);
+        this.write(res);
       } else {
-        console.log(chalk.bold.bgRed("WARNING:") + chalk.bold(" this endpoint does not accept POST request or you don't have enough permission to see it."));
+        console.log(chalk.bold.bgRed("WARNING:").toString() +
+          chalk.bold(errMessage)
+        );
       }
     };
 

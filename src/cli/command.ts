@@ -46,6 +46,8 @@ export interface ICommandOptions {
   outputFile  ?: string;
   indent      ?: number;
   noColor     ?: boolean;
+  noSuffix    ?: boolean;
+  endpoint    ?: string;
 }
 
 
@@ -58,32 +60,41 @@ export class DjangoRestFormlyCommand {
   outputFile   : string;
   indent       : number;
   noColor      : boolean;
+  noSuffix     : boolean;
+  endpoint     : string;
 
   constructor (options: ICommandOptions) {
+    this.write(options);
     this.host       = options.host || "127.0.0.1";
     if(endsWith(this.host, "/")) {
       let str = this.host;
       this.host = str.substring(0, str.length-1);
     }
     this.path       = path.normalize(options.path || '/');
-    if(startsWith(this.host, "/")) {
+    if(!startsWith(this.path, "/")) {
       this.path = '/' + this.path;
     }
     this.port       = options.port || 8000;
-    this.suffix     = options.suffix || '';
+    this.suffix     = '.json';
     this.outputFile = options.outputFile;
     this.indent     = options.indent || 4;
     this.noColor    = options.noColor;
+    this.noSuffix   = options.noSuffix;
+    this.endpoint   = options.endpoint;
   }
 
   write(data: any) {
-    console.log(prettyjson.render(data, {
-        keysColor: 'green',
-        stringColor: 'grey',
-        numberColor: 'blue',
-        inlineArrays: true
-      }, this.indent)
-    );
+    if (data instanceof Object) {
+      console.log(prettyjson.render(data, {
+          keysColor: 'green',
+          stringColor: 'grey',
+          numberColor: 'blue',
+          inlineArrays: true
+        }, this.indent)
+      );
+    } else {
+      console.log(data);
+    }
   }
 
   request(options, callback) {
@@ -93,7 +104,9 @@ export class DjangoRestFormlyCommand {
     options.headers = {
       'Accept': 'application/json; indent=' + this.indent
     }
-    options.path = options.path + this.suffix;
+    if (!this.noSuffix){
+      options.path = options.path + this.suffix;
+    }
 
     handler = function(response) {
       var str = '';
@@ -105,22 +118,24 @@ export class DjangoRestFormlyCommand {
         var errorMessage;
         if (response.statusCode === 401) {
           errorMessage = response.statusMessage;
-        }
-        if (response.statusCode >= 500) {
+        } else if (response.statusCode >= 500) {
           errorMessage = "Authentication failed!"
-        }
-        if(200 <= response.statusCode && response.statusCode < 400) {
+        } else if (response.statusCode === 404 ) {
+          errorMessage = "Resource not found: " + req.path;
+        } else if(200 <= response.statusCode && response.statusCode < 400) {
           try {
             JSON.parse(str);
           } catch (e) {
-            errorMessage = "Server does not return valid JSON";
+            errorMessage = "Server does not return valid JSON data";
           }
-          if (errorMessage) {
-            console.error(chalk.red(errorMessage));
-          } else {
+          if (!errorMessage) {
             callback(str);
+            return ;
           }
+        } else {
+          errorMessage = response.statusMessage;
         }
+        console.error(chalk.red(errorMessage));
       });
     };
     req = http.request(options, handler);
@@ -129,7 +144,7 @@ export class DjangoRestFormlyCommand {
     req.on('error', function(err) {
       // if any sort of error encountered by
       // the request, the error will be sent here.
-      console.error(chalk.red("Can not proceed your request"));
+      console.error(chalk.red(err));
       //console.error(err);
     });
 
@@ -146,14 +161,14 @@ export class DjangoRestFormlyCommand {
       callback: (data:string) => void,
       vm = this;
 
-    console.log("Available endpoints:");
-
     callback = function(raw) {
       var data = JSON.parse(raw);
       if (!vm.noColor) {
+        console.log("Available endpoints:");
         return vm.write(data);
       }
 
+      console.log("Available endpoints:");
       for (var name in data) {
         console.log("  * " + name)
       }

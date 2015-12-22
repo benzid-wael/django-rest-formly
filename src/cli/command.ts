@@ -5,6 +5,8 @@ import path = require("path");
 import chalk = require("chalk");
 import prettyjson = require("prettyjson");
 
+var JSON2 = require('JSON2');
+
 import {DjangoRestFrameworkAdapter} from "../main";
 
 
@@ -48,6 +50,7 @@ export interface ICommandOptions {
   noColor     ?: boolean;
   noSuffix    ?: boolean;
   endpoint    ?: string;
+  json        ?: boolean;
 }
 
 
@@ -62,6 +65,7 @@ export class DjangoRestFormlyCommand {
   noColor      : boolean;
   noSuffix     : boolean;
   endpoint     : string;
+  json         : boolean;
 
   constructor (options: ICommandOptions) {
     this.host       = options.host || "127.0.0.1";
@@ -76,22 +80,33 @@ export class DjangoRestFormlyCommand {
     this.port       = options.port || 8000;
     this.suffix     = '.json';
     this.outputFile = options.outputFile;
-    this.indent     = options.indent || 4;
+    if (options.indent) {
+      this.indent = parseInt(options.indent, 10);
+    } else {
+      this.indent = 2;
+    }
     this.noColor    = options.noColor;
     this.noSuffix   = options.noSuffix;
     this.endpoint   = options.endpoint;
+    this.json       = options.json;
   }
 
   log(data: any) {
-    if (data instanceof Object) {
-      console.log(prettyjson.render(data, {
+    if (!this.json && data instanceof Object) {
+      var options;
+      if (!this.noColor) {
+        options = {
           keysColor: 'green',
           stringColor: 'grey',
           numberColor: 'blue',
           inlineArrays: true,
           noColor: this.noColor
-        }, this.indent)
+        }
+      }
+      console.log(prettyjson.render(data, options || {noColor: true}, this.indent)
       );
+    } else if (this.json) {
+      console.log(JSON2.stringify(data, null, this.indent));
     } else {
       console.log(data);
     }
@@ -121,7 +136,7 @@ export class DjangoRestFormlyCommand {
         } else if (response.statusCode >= 500) {
           errorMessage = "Authentication failed!"
         } else if (response.statusCode === 404 ) {
-          errorMessage = "Resource not found: " + req.path;
+          errorMessage = "Resource not found.";
         } else if(200 <= response.statusCode && response.statusCode < 400) {
           try {
             JSON.parse(str);

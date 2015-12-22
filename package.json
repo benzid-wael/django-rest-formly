@@ -24,14 +24,19 @@
     "commander": "^2.9.0",
     "prettyjson": "^1.1.3"
   },
+  "typescript": {
+    "definition": "django-rest-formly.d.ts"
+  },
   "bin": {
-    "django-rest-formly": "./src/cli/index.js"
+    "django-rest-formly": "./dist/django-rest-formly/cli/index.js"
   },
   "scripts": {
-    "pretest": "tsc test/**/*.ts test/*.ts src/**/*.ts --module commonjs",
+    "prepublish": "tsc --outDir dist/django-rest-formly && autodts generate && cp src/cli/index.js dist/django-rest-formly/cli/index.js",
+    "pretest": "tsc test/cp src/cli/index.js dist/django-rest-formly/cli/**/*.ts test/*.ts src/**/*.ts --module commonjs",
     "test": "mocha --recursive"
   },
   "devDependencies": {
+    "autodts": "0.0.6",
     "bower": "~1.6.8",
     "browserify": "^12.0.1",
     "chai": "^3.4.1",
@@ -56,6 +61,7 @@
     "typescript": "~1.7.3",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "@lib/autodts-generator": "~0.0.1"
   }
 }

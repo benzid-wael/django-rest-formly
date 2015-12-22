@@ -4,6 +4,7 @@ import http = require("http");
 import path = require("path");
 import chalk = require("chalk");
 import prettyjson = require("prettyjson");
+import AngularFormly = require("angular-formly");
 
 var JSON2 = require('JSON2');
 
@@ -93,7 +94,7 @@ export class DjangoRestFormlyCommand {
 
   log(data: any) {
     if (!this.json && data instanceof Object) {
-      var options;
+      var options : any;
       if (!this.noColor) {
         options = {
           keysColor: 'green',
@@ -112,7 +113,7 @@ export class DjangoRestFormlyCommand {
     }
   }
 
-  request(options, callback) {
+  request(options : http.RequestOptions, callback : (data:any) => void) {
     var handler: (response: any) => void,
         req: http.ClientRequest;
 
@@ -125,12 +126,12 @@ export class DjangoRestFormlyCommand {
 
     handler = function(response) {
       var str = '';
-      response.on('data', function (chunk) {
+      response.on('data', function (chunk : string) {
         str += chunk;
       });
 
       response.on('end', function () {
-        var errorMessage;
+        var errorMessage : string;
         if (response.statusCode === 401) {
           errorMessage = response.statusMessage;
         } else if (response.statusCode >= 500) {
@@ -156,7 +157,7 @@ export class DjangoRestFormlyCommand {
     req = http.request(options, handler);
 
     // adding an 'error' event handler to a stream:
-    req.on('error', function(err) {
+    req.on('error', function(err : string) {
       // if any sort of error encountered by
       // the request, the error will be sent here.
       console.error(chalk.red(err));
@@ -198,7 +199,7 @@ export class DjangoRestFormlyCommand {
       vm = this;
 
     callback = function(raw) {
-      var res,
+      var res : AngularFormly.IFieldConfigurationObject,
           errMessage = " this endpoint does not accept POST request or you don't have enough permission to perform this action.",
           data = JSON.parse(raw);
       if (data.actions && data.actions.POST) {

@@ -64,7 +64,6 @@ export class DjangoRestFormlyCommand {
   endpoint     : string;
 
   constructor (options: ICommandOptions) {
-    this.write(options);
     this.host       = options.host || "127.0.0.1";
     if(endsWith(this.host, "/")) {
       let str = this.host;
@@ -83,13 +82,14 @@ export class DjangoRestFormlyCommand {
     this.endpoint   = options.endpoint;
   }
 
-  write(data: any) {
+  log(data: any) {
     if (data instanceof Object) {
       console.log(prettyjson.render(data, {
           keysColor: 'green',
           stringColor: 'grey',
           numberColor: 'blue',
-          inlineArrays: true
+          inlineArrays: true,
+          noColor: this.noColor
         }, this.indent)
       );
     } else {
@@ -163,15 +163,8 @@ export class DjangoRestFormlyCommand {
 
     callback = function(raw) {
       var data = JSON.parse(raw);
-      if (!vm.noColor) {
-        console.log("Available endpoints:");
-        return vm.write(data);
-      }
-
-      console.log("Available endpoints:");
-      for (var name in data) {
-        console.log("  * " + name)
-      }
+      vm.log("Available endpoints:");
+      vm.log(data);
     };
 
     // Send request to server
@@ -186,7 +179,8 @@ export class DjangoRestFormlyCommand {
       method: 'OPTIONS'
     },
       callback: (data:string) => void,
-      jsonOptions : prettyjson.IOptions;
+      jsonOptions : prettyjson.IOptions,
+      vm = this;
 
     callback = function(raw) {
       var res,
@@ -194,7 +188,7 @@ export class DjangoRestFormlyCommand {
           data = JSON.parse(raw);
       if (data.actions && data.actions.POST) {
         res = DjangoRestFrameworkAdapter(data.actions.POST);
-        this.write(res);
+        vm.log(res);
       } else {
         console.log(chalk.bold.bgRed("WARNING:").toString() +
           chalk.bold(errMessage)

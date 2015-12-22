@@ -7,6 +7,20 @@
 node_modules/
 npm-shrinkwrap.json
 
+# for travis
+.travis.yml
+
+# for lint tools
+.jshintrc
+tslint.json
+
+# for bower
+bower.json
+
+# for tsd & tsc
+tsd.json
+tsconfig.json
+
 # for grunt
 typings/
 .tscache/
@@ -15,18 +29,32 @@ espowered/
 # for https://github.com/Microsoft/TypeScript/issues/4667
 lib/**/*.ts
 !lib/**/*.d.ts
+*.d.ts
+!django-rest-formly.d.ts
+!django-rest-formly.ref.d.ts
 
 # codes
 test/
+src/
+
+# for editors
+*.bkp
+*.orig
+*.sw[po]
 
 # misc
 example/
+examples/
+docs/
+*.log
+*.gz
+*.tgz
 .gitignore
 .editorconfig
 circle.yml
 setup.sh
 Gruntfile.js
 Gulpfile.js
-tslint.json
+Makefile
 
 npm-debug.log

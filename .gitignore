@@ -13,3 +13,7 @@ src/**/*.js.map
 test/**/*.js
 test/**/*.js.map
 typings/
+
+# generated files
+*.d.ts
+dist/

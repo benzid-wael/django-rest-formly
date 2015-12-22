@@ -16,7 +16,41 @@ program
   .option('-h, --host <HOST>', "Specifies host address")
   .option('-p, --port <PORT>', "Specifies address port")
   .option('--root <PATH>', "Specifies root path for the API")
-  .option('--no-suffix', "Turn off appending '.json' to endpoints URIs");
+  .option('-S, --no-suffix', "Turn off appending '.json' to endpoints URIs")
+  .option('-c, --color', "Colorize the command output")
+  .option('-s, --indent-size <n>', "Specify indentation size.")
+  .parse(process.argv);
 
+program
+  .command('list')
+  .description('list endpoints.')
+  //.option('--no-urls', "Don't display URIs")
+  .action(function() {
+    new command.DjangoRestFormlyCommand({
+      host     : program.host,
+      port     : program.port,
+      path     : program.root,
+      noColor  : !program.color,
+      noSuffix : !program.suffix,
+      indent   : program.indentSize,
+    }).listEndpoints();
+  });
+
+program
+  .command('form <name>')
+  .description('generate form configuration for endpoint NAME.')
+  .option('--prettify', "Prettify command output")git st
+  
+  .action(function(name, options) {
+    new command.DjangoRestFormlyCommand({
+      host     : program.host,
+      port     : program.port,
+      path     : program.root,
+      noColor  : !program.color,
+      noSuffix : !program.suffix,
+      json     : !options.prettify,
+      indent   : program.indentSize,
+    }).generateFormScheme(name);
+  });
 
 program.parse(process.argv);

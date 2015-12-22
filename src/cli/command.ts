@@ -46,7 +46,7 @@ export interface ICommandOptions {
   port        ?: number;
   suffix      ?: string;
   outputFile  ?: string;
-  indent      ?: number;
+  indent      ?: string;
   noColor     ?: boolean;
   noSuffix    ?: boolean;
   endpoint    ?: string;

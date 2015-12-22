@@ -39,8 +39,8 @@ program
 program
   .command('form <name>')
   .description('generate form configuration for endpoint NAME.')
-  .option('--prettify', "Prettify command output")git st
-  
+  .option('--prettify', "Prettify command output")
+
   .action(function(name, options) {
     new command.DjangoRestFormlyCommand({
       host     : program.host,

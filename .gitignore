@@ -15,7 +15,6 @@ test/**/*.js.map
 typings/
 
 *.d.ts
-dist/
 
 # Include cli script
 !src/cli/index.js

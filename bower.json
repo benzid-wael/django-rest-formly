@@ -5,7 +5,7 @@
     "Wael BEN ZID <benzid.wael@hotmail.fr>"
   ],
   "description": "Convert Django REST framework metadata to angular-formly scheme.",
-  "main": "dist/django-rest-formly.js",
+  "main": "./dist/django-rest-formly.js",
   "keywords": [
     "django",
     "rest",
@@ -28,9 +28,12 @@
     "tests",
     "src",
     "examples",
+    "typings",
     "Makefile",
     "*.json",
     "*.tgz",
+    "*.sh",
+    "dist/django-rest-formly",
     "!bower.json",
     "!dist/django-rest-formly.js",
     "!README.md"

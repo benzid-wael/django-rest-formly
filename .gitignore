@@ -4,7 +4,7 @@ example/bower_components
 node_modules
 docs
 
-# idea
+# for idea
 .idea/
 
 # generated files
@@ -13,3 +13,19 @@ src/**/*.js.map
 test/**/*.js
 test/**/*.js.map
 typings/
+
+*.d.ts
+dist/
+
+# Include cli script
+!src/cli/index.js
+
+# backup files
+*.sw[po]
+*.bkp
+*.orig
+
+# compressed files
+*.tgz
+*.tar
+*.gz

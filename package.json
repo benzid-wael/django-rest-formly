@@ -32,7 +32,7 @@
   },
   "scripts": {
     "prepublish": "tsc --outDir dist/django-rest-formly && autodts generate && cp src/cli/index.js dist/django-rest-formly/cli/index.js",
-    "pretest": "tsc test/cp src/cli/index.js dist/django-rest-formly/cli/**/*.ts test/*.ts src/**/*.ts --module commonjs",
+    "pretest": "tsc test/**/*.ts src/**/*.ts --module commonjs",
     "test": "mocha --recursive"
   },
   "devDependencies": {

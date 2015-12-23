@@ -29,7 +29,7 @@ var sources = {
 };
 
 var destinations = {
-  js: './dist/js',
+  js: './dist/',
   filename: 'django-rest-formly',
   definitions: './dist/definitions',
   docs: './docs/'
@@ -69,12 +69,16 @@ gulp.task('js:app', function() {
     .pipe(source('main.ts'))
     .pipe(buffer());
 
-  es.merge(
-    tsStream.dts.pipe(gulp.dest(destinations.definitions)),
-    browserifyStream
+  //es.merge(
+  //  tsStream.dts.pipe(gulp.dest(destinations.definitions)),
+  //  browserifyStream
+  //  .pipe(concat(destinations.filename + '.js'))
+  //  .pipe(gulp.dest(destinations.js))
+  // );
+
+  browserifyStream
     .pipe(concat(destinations.filename + '.js'))
-    .pipe(gulp.dest(destinations.js))
-  );
+    .pipe(gulp.dest(destinations.js));
 });
 
 // deletes the dist folder for a clean build

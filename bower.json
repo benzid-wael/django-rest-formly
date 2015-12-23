@@ -1,6 +1,6 @@
 {
   "name": "django-rest-formly",
-  "version": "0.0.2",
+  "version": "0.0.3-alpha.0",
   "authors": [
     "Wael BEN ZID <benzid.wael@hotmail.fr>"
   ],
@@ -21,19 +21,19 @@
   ],
   "license": "MIT",
   "ignore": [
+    "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests",
-    "example",
     "src",
-    "docs",
-    ".gitignore",
-    ".jshintrc",
-    "bower.json",
-    "Gulpfile.js",
-    "package.json",
-    "README.md"
+    "examples",
+    "Makefile",
+    "*.json",
+    "*.tgz",
+    "!bower.json",
+    "!dist/django-rest-formly.js",
+    "!README.md"
   ],
   "dependencies": {}
 }

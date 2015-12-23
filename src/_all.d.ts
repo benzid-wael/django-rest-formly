@@ -1,5 +1,9 @@
 /// <reference path="../typings/tsd.d.ts" />
 
+/// <reference path="./contrib/prettyjson.d.ts" />
+/// <reference path="./contrib/json2.d.ts" />
+
+
 /// <reference path="./interfaces.ts" />
 /// <reference path="./main.ts" />
 /// <reference path="./utils.ts" />

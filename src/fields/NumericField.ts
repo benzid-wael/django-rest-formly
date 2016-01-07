@@ -29,7 +29,7 @@ export class NumericField extends base.Field implements INumericField {
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
     this.minValue = options.min_value;
-    this.minValue = options.max_value;
+    this.maxValue = options.max_value;
     super(options);
   }
 

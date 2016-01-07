@@ -8,7 +8,7 @@ import AngularFormly = require("angular-formly");
 
 var JSON2 = require('JSON2');
 
-import {DjangoRestFrameworkAdapter} from "../main";
+import {toFormlyFields} from "../main";
 
 
 //interface StringConstructor {
@@ -203,7 +203,7 @@ export class DjangoRestFormlyCommand {
           errMessage = " this endpoint does not accept POST request or you don't have enough permission to perform this action.",
           data = JSON.parse(raw);
       if (data.actions && data.actions.POST) {
-        res = DjangoRestFrameworkAdapter(data.actions.POST);
+        res = toFormlyFields(data.actions.POST);
         vm.log(res);
       } else {
         console.log(chalk.bold.bgRed("WARNING:").toString() +

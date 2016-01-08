@@ -1,6 +1,11 @@
 {
   "name": "django-rest-formly",
   "version": "0.0.1",
+  "author": "Wael BEN ZID <benzid.wael@hotmail.fr>",
+  "repository": {
+    "type": "git",
+	    "url": "https://github.com/benzid-wael/django-rest-formly.git"
+  },
   "description": "Convert Django REST framework metadata to angular-formly scheme.",
   "main": "./dist/cli/index.js",
   "keywords": [

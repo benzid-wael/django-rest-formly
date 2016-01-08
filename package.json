@@ -1,8 +1,13 @@
 {
   "name": "django-rest-formly",
-  "version": "0.0.3-alpha.0",
+  "version": "0.0.1",
+  "author": "Wael BEN ZID <benzid.wael@hotmail.fr>",
+  "repository": {
+    "type": "git",
+	    "url": "https://github.com/benzid-wael/django-rest-formly.git"
+  },
   "description": "Convert Django REST framework metadata to angular-formly scheme.",
-  "main": "dist/django-rest-formly.js",
+  "main": "./dist/cli/index.js",
   "keywords": [
     "django",
     "rest",
@@ -28,10 +33,10 @@
     "definition": "django-rest-formly.d.ts"
   },
   "bin": {
-    "django-rest-formly": "./dist/django-rest-formly/cli/index.js"
+    "django-rest-formly": "dist/cli/index.js"
   },
   "scripts": {
-    "prepublish": "tsc --outDir dist/django-rest-formly && autodts generate && cp src/cli/index.js dist/django-rest-formly/cli/index.js",
+    "prepublish": "tsc --outDir dist/ && autodts generate && cp src/cli/index.js dist/cli/index.js",
     "pretest": "tsc test/**/*.ts src/**/*.ts --module commonjs",
     "test": "mocha --recursive"
   },

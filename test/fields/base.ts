@@ -134,6 +134,48 @@ describe("Field's Unit Tests:", () => {
       expect(field.getConfigurationObject()).to.deep.equal(expected);
         done();
     });
+
+    it('provide also allow_null attribute', (done) => {
+      var rest_meta_field : IDjangoRestFieldOptions,
+          field: Field,
+          expected: AngularFormly.ITemplateOptions;
+
+      rest_meta_field = _.extend({}, rest_meta, {allow_null: true});
+      field = new Field(rest_meta_field);
+      expected = {
+        type: 'input',
+        key: 'note',
+        templateOptions: {
+          label: 'note',
+          type: 'text',
+          disabled: false,
+          required: false
+        }
+      };
+      expect(field.getConfigurationObject()).to.deep.equal(expected);
+        done();
+    });
+
+    it('required field which allow null values', (done) => {
+      var rest_meta_field : IDjangoRestFieldOptions,
+          field: Field,
+          expected: AngularFormly.ITemplateOptions;
+
+      rest_meta_field = _.extend({}, rest_meta, {allow_null: true, required: true});
+      field = new Field(rest_meta_field);
+      expected = {
+        type: 'input',
+        key: 'note',
+        templateOptions: {
+          label: 'note',
+          type: 'text',
+          disabled: false,
+          required: false
+        }
+      };
+      expect(field.getConfigurationObject()).to.deep.equal(expected);
+        done();
+    });
   });
 
   describe("Extra template Options", () => {

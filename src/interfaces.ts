@@ -33,6 +33,11 @@ export interface IDjangoRestFieldOptions {
   read_only?: boolean;
 
   /**
+   * Specifies if the field accept null value.
+   */
+  allow_null?: boolean;
+
+  /**
    * Specifies if the field has a default value.
    */
   "default"?: any;

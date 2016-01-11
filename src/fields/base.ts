@@ -62,6 +62,7 @@ export class Field implements IField {
   required:boolean;
   readOnly:boolean;
   defaultValue:any;
+  allow_null:boolean;
   label:string;
   helpText:string;
   choices:Array<Object>;
@@ -71,13 +72,21 @@ export class Field implements IField {
    * @param options  The field metadata.
    */
   constructor(options:interfaces.IDjangoRestFieldOptions) {
-    this.name     = options.name;
-    this.required = options.required || false;
-    this.readOnly = options.read_only || false;
-    this.defaultValue  = options.default;
-    this.label    = options.label || this.name;
-    this.helpText = options.help_text;
-    this.choices  = options.choices;
+    this.name         = options.name;
+    this.required     = options.required || false;
+    this.readOnly     = options.read_only || false;
+    this.defaultValue = options.default;
+    this.allow_null   = options.allow_null || false;
+    this.label        = options.label || this.name;
+    this.helpText     = options.help_text;
+    this.choices      = options.choices;
+  }
+
+  public isBoolean() : boolean {
+    if (this.constructor.fieldType === 'checkbox') {
+      return true;
+    }
+    return false;
   }
 
   protected getExtraTemplateOptions() {
@@ -91,6 +100,12 @@ export class Field implements IField {
       required: this.required,
       disabled: this.readOnly
     };
+    // angular-formly don't support 'allow_null' by default,
+    // but we can admit that a field, except boolean field,
+    // that allows null values is not required.
+    if (!this.isBoolean() && this.allow_null) {
+      tplOptions.required = false;
+    }
     return utils.smartExtend({}, tplOptions, this.getExtraTemplateOptions());
   }
 

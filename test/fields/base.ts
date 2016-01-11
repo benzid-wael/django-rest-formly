@@ -112,6 +112,28 @@ describe("Field's Unit Tests:", () => {
       expect(field.getConfigurationObject()).to.deep.equal(expected);
         done();
     });
+
+    it('provide also default attribute', (done) => {
+      var rest_meta_field : IDjangoRestFieldOptions,
+          field: Field,
+          expected: AngularFormly.ITemplateOptions;
+
+      rest_meta_field = _.extend({}, rest_meta, {label: "Note", "default": "some note"});
+      field = new Field(rest_meta_field);
+      expected = {
+        type: 'input',
+        key: 'note',
+        defaultValue: "some note",
+        templateOptions: {
+          label: 'Note',
+          type: 'text',
+          disabled: false,
+          required: false
+        }
+      };
+      expect(field.getConfigurationObject()).to.deep.equal(expected);
+        done();
+    });
   });
 
   describe("Extra template Options", () => {

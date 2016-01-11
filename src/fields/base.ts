@@ -61,6 +61,7 @@ export class Field implements IField {
   name:string;
   required:boolean;
   readOnly:boolean;
+  defaultValue:any;
   label:string;
   helpText:string;
   choices:Array<Object>;
@@ -73,6 +74,7 @@ export class Field implements IField {
     this.name     = options.name;
     this.required = options.required || false;
     this.readOnly = options.read_only || false;
+    this.defaultValue  = options.default;
     this.label    = options.label || this.name;
     this.helpText = options.help_text;
     this.choices  = options.choices;
@@ -102,7 +104,10 @@ export class Field implements IField {
       templateOptions: this.getTemplateOptions()
     };
     // TODO handle template, templateUrl
-    // TODO handle defaultValue
+    // handle defaultValue
+    if (this.defaultValue !== undefined) {
+      configurationObject.defaultValue = this.defaultValue;
+    }
     return configurationObject;
   }
 }

@@ -51,10 +51,34 @@
           "label": "Family Name (Max: 10)",
           "max_length": 10
       },
+      "password": {
+          "type": "password",
+          "required": true,
+          "read_only": false,
+          "label": "Password"
+      },
       "age": {
           "type": "integer",
           "required": true,
           "read_only": false
+      },
+      "email": {
+          "type": "email",
+          "required": true,
+          "read_only": false,
+          "label": "Email"
+      },
+      "hidden": {
+          "type": "hidden",
+          "required": false,
+          "read_only": false,
+          "label": "You'll not see me ever"
+      },
+      "website": {
+          "type": "email",
+          "required": true,
+          "read_only": false,
+          "label": "Website"
       }
     });
 

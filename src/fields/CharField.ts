@@ -80,8 +80,7 @@ export class TextField extends CharField implements ITextField {
 
 export class EmailField extends CharField {
 
-  protected static fieldType: string = 'email';
-  protected static templateType: string = null;
+  protected static templateType: string = 'email';
 
   protected getExtraTemplateOptions() {
     return utils.extend(
@@ -95,12 +94,10 @@ export class EmailField extends CharField {
 
 export class PasswordField extends CharField {
 
-  protected static fieldType: string = 'password';
-  protected static templateType: string = null;
+  protected static templateType: string = 'password';
 }
 
 export class HiddenField extends CharField {
 
-  protected static fieldType: string = 'hidden';
-  protected static templateType: string = null;
+  protected static templateType: string = 'hidden';
 }

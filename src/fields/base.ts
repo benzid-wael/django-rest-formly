@@ -52,7 +52,7 @@ export class Field implements IField {
   /**
    * Specifies HTML type, e.g: input, checkbox, etc.
    */
-  protected static fieldType: string;
+  protected static fieldType: string = 'input';
   /**
    * Specifies the type of field to be rendered, e.g: password, email, etc.
    */

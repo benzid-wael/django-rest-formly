@@ -7,7 +7,7 @@ import chai = require('chai');
 import _ = require('underscore');
 import AngularFormly = require("angular-formly");
 
-import fields = require('../../src/fields/base');
+import * as fields from '../../src/fields/';
 import {IDjangoRestFieldOptions} from "../../src/interfaces";
 
 /**

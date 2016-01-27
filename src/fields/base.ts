@@ -138,22 +138,3 @@ export class BooleanField extends Field {
   protected static fieldType: string = 'checkbox';
   protected static templateType: string = null;
 }
-
-// FIXME Both EmailField and PasswordField should be subclass of CharField as they accepts min/max length properties
-export class EmailField extends Field {
-
-  protected static fieldType: string = 'email';
-  protected static templateType: string = null;
-}
-
-export class PasswordField extends Field {
-
-  protected static fieldType: string = 'password';
-  protected static templateType: string = null;
-}
-
-export class HiddenField extends Field {
-
-  protected static fieldType: string = 'hidden';
-  protected static templateType: string = null;
-}

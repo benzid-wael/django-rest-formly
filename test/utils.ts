@@ -6,7 +6,7 @@
 import chai = require('chai');
 import _ = require('underscore');
 
-import utils = require('../src/utils');
+import * as utils from '../src/utils';
 
 /**
  * Globals

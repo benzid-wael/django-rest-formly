@@ -36,7 +36,7 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         type: "email"
       },
       expected: {
-        fieldType: "email",
+        fieldType: "input",
         "class": fields.EmailField
       }
     },
@@ -45,7 +45,7 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         type: "hidden"
       },
       expected: {
-        fieldType: "hidden",
+        fieldType: "input",
         "class": fields.HiddenField
       }
     },
@@ -54,7 +54,7 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         type: "password"
       },
       expected: {
-        fieldType: "password",
+        fieldType: "input",
         "class": fields.PasswordField
       }
     },

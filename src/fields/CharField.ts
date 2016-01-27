@@ -82,6 +82,15 @@ export class EmailField extends CharField {
 
   protected static fieldType: string = 'email';
   protected static templateType: string = null;
+
+  protected getExtraTemplateOptions() {
+    return utils.extend(
+      super.getExtraTemplateOptions(),
+      {
+        pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$"
+      }
+    );
+  }
 }
 
 export class PasswordField extends CharField {

@@ -24,20 +24,22 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
   var factoryTestCases = [
     {
       src: {
-        type: "boolean"
-      },
-      expected: {
-        fieldType: "checkbox",
-        "class": fields.BooleanField
-      }
-    },
-    {
-      src: {
         type: "email"
       },
       expected: {
         fieldType: "input",
-        "class": fields.EmailField
+        "class": fields.EmailField,
+        templateType: "email"
+      }
+    },
+    {
+      src: {
+        type: "boolean"
+      },
+      expected: {
+        fieldType: "checkbox",
+        "class": fields.BooleanField,
+        templateType: null
       }
     },
     {
@@ -46,7 +48,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "input",
-        "class": fields.HiddenField
+        "class": fields.HiddenField,
+        templateType: "hidden"
       }
     },
     {
@@ -55,7 +58,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "input",
-        "class": fields.PasswordField
+        "class": fields.PasswordField,
+        templateType: "password"
       }
     },
     {
@@ -65,7 +69,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "input",
-        "class": fields.CharField
+        "class": fields.CharField,
+        templateType: null
       }
     },
     {
@@ -74,7 +79,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "textarea",
-        "class": fields.TextField
+        "class": fields.TextField,
+        templateType: null
       }
     },
     {
@@ -83,7 +89,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "select",
-        "class": fields.SelectField
+        "class": fields.SelectField,
+        templateType: null
       }
     },
     {
@@ -92,7 +99,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "radio",
-        "class": fields.RadioField
+        "class": fields.RadioField,
+        templateType: null
       }
     },
     {
@@ -101,7 +109,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "select",
-        "class": fields.SelectField
+        "class": fields.SelectField,
+        templateType: null
       }
     },
     {
@@ -110,7 +119,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "input",
-        "class": fields.NumericField
+        "class": fields.NumericField,
+        templateType: null
       }
     },
   ];
@@ -143,6 +153,17 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
             res = DjangoRestConfig.factory(extendedField);
         expect(res).to.be.an.instanceOf(testCase.expected.class);
         chai.assert.propertyVal(res.constructor, "fieldType", testCase.expected.fieldType);
+      });
+        done();
+    });
+
+    it('should returns the appropriate template type', (done) => {
+      factoryTestCases.forEach(function(testCase) {
+        let extendedField : IDjangoRestFieldOptions = <IDjangoRestFieldOptions> extend({}, fieldMeta, testCase.src),
+            res = DjangoRestConfig.factory(extendedField);
+        if (testCase.expected.templateType) {
+            chai.assert.propertyVal(res.constructor, "fieldType", testCase.expected.fieldType);
+        }
       });
         done();
     });

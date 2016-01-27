@@ -2,8 +2,8 @@
 
 import {IDjangoRestFieldOptions} from "./interfaces"
 
-import {Field, BooleanField, EmailField, HiddenField, PasswordField} from "./fields/base"
-import  {CharField, TextField} from "./fields/CharField"
+import {Field, BooleanField} from "./fields/base"
+import  {CharField, TextField, EmailField, HiddenField, PasswordField} from "./fields/CharField"
 import {SelectField, RadioField} from "./fields/ChoiceField"
 import {NumericField} from "./fields/NumericField"
 

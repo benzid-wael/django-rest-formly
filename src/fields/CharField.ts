@@ -76,3 +76,22 @@ export class TextField extends CharField implements ITextField {
     );
   }
 }
+
+
+export class EmailField extends CharField {
+
+  protected static fieldType: string = 'email';
+  protected static templateType: string = null;
+}
+
+export class PasswordField extends CharField {
+
+  protected static fieldType: string = 'password';
+  protected static templateType: string = null;
+}
+
+export class HiddenField extends CharField {
+
+  protected static fieldType: string = 'hidden';
+  protected static templateType: string = null;
+}

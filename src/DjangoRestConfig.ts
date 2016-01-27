@@ -2,17 +2,14 @@
 
 import {IDjangoRestFieldOptions} from "./interfaces"
 
-import {Field, BooleanField, EmailField, HiddenField, PasswordField} from "./fields/base"
-import  {CharField, TextField} from "./fields/CharField"
-import {SelectField, RadioField} from "./fields/ChoiceField"
-import {NumericField} from "./fields/NumericField"
+import * as fields from "./fields"
 
 
 export default DjangoRestConfig
 
 
 export interface IFieldFactory {
-  (djangoRestMeta:IDjangoRestFieldOptions): Field | string;
+  (djangoRestMeta:IDjangoRestFieldOptions): fields.Field | string;
 }
 
 var djnagoRestFieldLookup = [
@@ -60,16 +57,16 @@ export class DjangoRestConfig {
     // "nested object": DictField or Serializer
 
   private static _fieldMapping: any = {
-    "boolean"   : BooleanField,
-    "email"     : EmailField,
-    "hidden"    : HiddenField,
-    "password"  : PasswordField,
-    "string"    : CharField,
-    "text"      : TextField,
-    "select"    : SelectField,
-    "radio"     : RadioField,
-    "choice"    : SelectField,  // By default, returns a SelectField for choice fields
-    "integer"   : NumericField
+    "boolean"   : fields.BooleanField,
+    "email"     : fields.EmailField,
+    "hidden"    : fields.HiddenField,
+    "password"  : fields.PasswordField,
+    "string"    : fields.CharField,
+    "text"      : fields.TextField,
+    "select"    : fields.SelectField,
+    "radio"     : fields.RadioField,
+    "choice"    : fields.SelectField,  // By default, returns a SelectField for choice fields
+    "integer"   : fields.NumericField
   };
 
   /**
@@ -80,8 +77,8 @@ export class DjangoRestConfig {
    * @returns {any}
      */
   static factory(djangoRestMeta:IDjangoRestFieldOptions,
-          factoryFn?:IFieldFactory): Field {
-    var field_class_string: Field|string = null,
+          factoryFn?:IFieldFactory): fields.Field {
+    var field_class_string: fields.Field|string = null,
         // FIXME if we define fieldClass with Field type, we got: TS2351 error
         //       Cannot use 'new' with an expression whose type lacks a call or construct signature.
         fieldClass: any;
@@ -90,7 +87,7 @@ export class DjangoRestConfig {
     }
     if (!field_class_string) {
       for(let i in djnagoRestFieldLookup) {
-        let ret: string|Field, lookupFn: IFieldFactory;
+        let ret: string|fields.Field, lookupFn: IFieldFactory;
         lookupFn = djnagoRestFieldLookup[i];
         ret = lookupFn(djangoRestMeta);
         if (ret !== null && ret !== undefined) {
@@ -112,15 +109,15 @@ export class DjangoRestConfig {
       throw TypeError("Can not find an appropriate field for '" + djangoRestMeta.type + "' field");
     }
     // force type
-    fieldClass = <Field> field_class_string;
+    fieldClass = <fields.Field> field_class_string;
     return new fieldClass(djangoRestMeta);
   }
 
-  setType(type:string, fieldClass:Field) {
+  setType(type:string, fieldClass:fields.Field) {
     DjangoRestConfig._fieldMapping[type] = fieldClass;
   }
 
-  getType(type:string): Field {
+  getType(type:string): fields.Field {
     return DjangoRestConfig._fieldMapping[type];
   }
 }

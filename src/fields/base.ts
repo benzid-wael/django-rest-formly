@@ -6,7 +6,8 @@ import utils = require('../utils');
 import interfaces  = require('../interfaces');
 
 
-// WONTFIX Missing field in ITemplateOptions, see: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7088
+// WONTFIX Missing field in ITemplateOptions
+// SEE https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7088
 export interface ITemplateOptions extends AngularFormly.ITemplateOptions {
   options?: Array<Object>;
 }
@@ -51,7 +52,7 @@ export class Field implements IField {
   /**
    * Specifies HTML type, e.g: input, checkbox, etc.
    */
-  protected static fieldType: string;
+  protected static fieldType: string = 'input';
   /**
    * Specifies the type of field to be rendered, e.g: password, email, etc.
    */
@@ -61,6 +62,8 @@ export class Field implements IField {
   name:string;
   required:boolean;
   readOnly:boolean;
+  defaultValue:any;
+  allow_null:boolean;
   label:string;
   helpText:string;
   choices:Array<Object>;
@@ -70,12 +73,21 @@ export class Field implements IField {
    * @param options  The field metadata.
    */
   constructor(options:interfaces.IDjangoRestFieldOptions) {
-    this.name     = options.name;
-    this.required = options.required || false;
-    this.readOnly = options.read_only || false;
-    this.label    = options.label || this.name;
-    this.helpText = options.help_text;
-    this.choices  = options.choices;
+    this.name         = options.name;
+    this.required     = options.required || false;
+    this.readOnly     = options.read_only || false;
+    this.defaultValue = options.default;
+    this.allow_null   = options.allow_null || false;
+    this.label        = options.label || this.name;
+    this.helpText     = options.help_text;
+    this.choices      = options.choices;
+  }
+
+  public isBoolean() : boolean {
+    if (this.constructor.fieldType === 'checkbox') {
+      return true;
+    }
+    return false;
   }
 
   protected getExtraTemplateOptions() {
@@ -89,6 +101,12 @@ export class Field implements IField {
       required: this.required,
       disabled: this.readOnly
     };
+    // angular-formly don't support 'allow_null' by default,
+    // but we can admit that a field, except boolean field,
+    // that allows null values is not required.
+    if (!this.isBoolean() && this.allow_null) {
+      tplOptions.required = false;
+    }
     return utils.smartExtend({}, tplOptions, this.getExtraTemplateOptions());
   }
 
@@ -102,7 +120,10 @@ export class Field implements IField {
       templateOptions: this.getTemplateOptions()
     };
     // TODO handle template, templateUrl
-    // TODO handle defaultValue
+    // handle defaultValue
+    if (this.defaultValue !== undefined) {
+      configurationObject.defaultValue = this.defaultValue;
+    }
     return configurationObject;
   }
 }
@@ -115,24 +136,5 @@ export class Field implements IField {
 export class BooleanField extends Field {
 
   protected static fieldType: string = 'checkbox';
-  protected static templateType: string = null;
-}
-
-// FIXME Both EmailField and PasswordField should be subclass of CharField as they accepts min/max length properties
-export class EmailField extends Field {
-
-  protected static fieldType: string = 'email';
-  protected static templateType: string = null;
-}
-
-export class PasswordField extends Field {
-
-  protected static fieldType: string = 'password';
-  protected static templateType: string = null;
-}
-
-export class HiddenField extends Field {
-
-  protected static fieldType: string = 'hidden';
   protected static templateType: string = null;
 }

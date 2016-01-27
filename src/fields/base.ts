@@ -6,7 +6,8 @@ import utils = require('../utils');
 import interfaces  = require('../interfaces');
 
 
-// WONTFIX Missing field in ITemplateOptions, see: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7088
+// WONTFIX Missing field in ITemplateOptions
+// SEE https://github.com/DefinitelyTyped/DefinitelyTyped/issues/7088
 export interface ITemplateOptions extends AngularFormly.ITemplateOptions {
   options?: Array<Object>;
 }

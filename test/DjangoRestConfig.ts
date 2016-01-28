@@ -125,11 +125,22 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
     },
     {
       src: {
-        type: "regex"
+        type: "regex",
+        pattern: '\d{2}'
       },
       expected: {
         fieldType: "input",
         "class": fields.RegexField,
+        templateType: "text"
+      }
+    },
+    {
+      src: {
+        type: "regex"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.CharField,
         templateType: "text"
       }
     },
@@ -177,6 +188,26 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       });
         done();
     });
+
+    it('regex field should define pattern', (done) => {
+      var withPattern = {
+        type: "regex",
+        pattern: "^a"
+      }, withoutPattern = {
+        type: "regex"
+      };
+      let extendedField : IDjangoRestFieldOptions = <IDjangoRestFieldOptions> extend({}, fieldMeta, withPattern),
+          res = DjangoRestConfig.factory(extendedField);
+
+      expect(res).to.be.an.instanceOf(fields.RegexField);
+      chai.assert.propertyVal(res.constructor, "fieldType", "input");
+
+      extendedField = <IDjangoRestFieldOptions> extend({}, fieldMeta, withoutPattern),
+
+      expect(res).to.be.not.an.instanceOf(fields.RegexField);
+        done();
+    });
+
   });
 
   describe(".getType()", () => {});

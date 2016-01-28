@@ -123,6 +123,16 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         templateType: null
       }
     },
+    {
+      src: {
+        type: "regex"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.RegexField,
+        templateType: "text"
+      }
+    },
   ];
 
   describe("factory", () => {

@@ -202,8 +202,8 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       expect(res).to.be.an.instanceOf(fields.RegexField);
       chai.assert.propertyVal(res.constructor, "fieldType", "input");
 
-      extendedField = <IDjangoRestFieldOptions> extend({}, fieldMeta, withoutPattern),
-
+      extendedField = <IDjangoRestFieldOptions> extend({}, fieldMeta, withoutPattern);
+      res = DjangoRestConfig.factory(extendedField);
       expect(res).to.be.not.an.instanceOf(fields.RegexField);
         done();
     });

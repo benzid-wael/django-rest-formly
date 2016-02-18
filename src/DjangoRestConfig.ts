@@ -22,6 +22,7 @@ var djnagoRestFieldLookup = [
   (djangoRestMeta:IDjangoRestFieldOptions) => {
     if (djangoRestMeta.type == "regex") {
       if (djangoRestMeta.pattern == undefined) {
+        console.warn('regex field should define pattern property. \'' + djangoRestMeta.name + '\' field will be treated as string.');
         return "string";
       }
       return "regex";

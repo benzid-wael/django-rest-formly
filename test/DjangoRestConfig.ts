@@ -144,6 +144,16 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         templateType: "text"
       }
     },
+    {
+      src: {
+        type: "url"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.CharField,
+        templateType: "url"
+      }
+    },
   ];
 
   describe("factory", () => {

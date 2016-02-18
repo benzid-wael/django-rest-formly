@@ -18,7 +18,7 @@ var djnagoRestFieldLookup = [
       // FIXME What about a choice list with only one item ? should be readOnly field?
       return "choice";
     }
-  },,
+  },
   (djangoRestMeta:IDjangoRestFieldOptions) => {
     if (djangoRestMeta.type == "regex") {
       if (djangoRestMeta.pattern == undefined) {

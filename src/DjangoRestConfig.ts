@@ -80,6 +80,7 @@ export class DjangoRestConfig {
     "radio"     : fields.RadioField,
     "regex"     : fields.RegexField,
     "email"     : fields.EmailField,
+    "url"       : fields.URLField,
   };
 
   /**

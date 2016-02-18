@@ -91,7 +91,7 @@ export class RegexField extends CharField implements IRegexField {
   pattern: string;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
-    this.pattern = options.pattern;
+    this.pattern = options.pattern || this.pattern;
     super(options);
   }
 
@@ -128,4 +128,12 @@ export class PasswordField extends CharField {
 export class HiddenField extends CharField {
 
   protected static templateType: string = 'hidden';
+}
+
+
+export class URLField extends RegexField {
+
+  protected static templateType: string = 'url';
+  pattern: string = '/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/';
+
 }

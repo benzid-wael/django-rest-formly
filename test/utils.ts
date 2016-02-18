@@ -67,7 +67,7 @@ describe("Module Utils' Unit Tests:", () => {
             done();
         });
 
-        it('should not fails if we don\'t specifies sources', (done) => {
+        it('should not fail if we didn\'t specify sources', (done) => {
             chai.assert.doesNotThrow(function() {
               utils.extend({});
             });

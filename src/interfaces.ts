@@ -76,4 +76,9 @@ export interface IDjangoRestFieldOptions {
    * The maximum value.
    */
   max_value?: number;
+
+  /**
+   * Pattern to be verified.
+   */
+  pattern?: string;
 }

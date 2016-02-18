@@ -30,6 +30,14 @@ export interface ITextField extends ICharField {
 }
 
 
+export interface IRegexField extends ICharField {
+
+  /**
+  * Specifies the rows attribute for the textarea element.
+  */
+  pattern: string;
+}
+
 /**
  * Base string field class. The default form widget for this type is "input".
  * CharField has two extra optional arguments: `minLength` and `maxLength`.
@@ -72,6 +80,26 @@ export class TextField extends CharField implements ITextField {
       super.getExtraTemplateOptions(),
       {
         rows: this.rows
+      }
+    );
+  }
+}
+
+
+export class RegexField extends CharField implements IRegexField {
+
+  pattern: string;
+
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
+    this.pattern = options.pattern;
+    super(options);
+  }
+
+  protected getExtraTemplateOptions() {
+    return utils.extend(
+      super.getExtraTemplateOptions(),
+      {
+        pattern: this.pattern
       }
     );
   }

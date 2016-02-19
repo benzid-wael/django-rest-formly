@@ -46,7 +46,7 @@ export class DjangoRestConfig {
     // DjangoRest field types list:
     // "field":
     // "boolean": "boolean",
-    // "null boolean":
+    // "null boolean": "boolean",
     // "string": "string",  // if there is no max_length property, so we had to returns "text" aka. TextField
     // "url":
     // "email": "email",
@@ -81,6 +81,7 @@ export class DjangoRestConfig {
     "regex"     : fields.RegexField,
     "email"     : fields.EmailField,
     "url"       : fields.URLField,
+    "ipaddress" : fields.IPAddressField,
   };
 
   /**

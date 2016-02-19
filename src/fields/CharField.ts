@@ -134,6 +134,12 @@ export class HiddenField extends CharField {
 export class URLField extends RegexField {
 
   protected static templateType: string = 'url';
-  pattern: string = '/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/';
+  pattern: string = '(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?';
 
+}
+
+
+export class IPAddressField extends RegexField {
+
+  pattern: string = '^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$';
 }

@@ -150,8 +150,18 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
       },
       expected: {
         fieldType: "input",
-        "class": fields.CharField,
+        "class": fields.URLField,
         templateType: "url"
+      }
+    },
+    {
+      src: {
+        type: "ipaddress"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.IPAddressField,
+        templateType: "text"
       }
     },
   ];

@@ -6,7 +6,7 @@
 
 /// <reference path="./interfaces.ts" />
 /// <reference path="./main.ts" />
-/// <reference path="./utils.ts" />
+/// <reference path="./utils/object.ts" />
 /// <reference path="./DjangoRestConfig.ts" />
 
 /// <reference path="./fields/base.ts" />

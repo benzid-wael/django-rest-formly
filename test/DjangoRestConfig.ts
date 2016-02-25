@@ -164,6 +164,26 @@ describe("Module DjangoRestConfig' Unit Tests:", () => {
         templateType: "text"
       }
     },
+    {
+      src: {
+        type: "float"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.FloatField,
+        templateType: "number"
+      }
+    },
+    {
+      src: {
+        type: "decimal"
+      },
+      expected: {
+        fieldType: "input",
+        "class": fields.DecimalField,
+        templateType: "number"
+      }
+    },
   ];
 
   describe("factory", () => {

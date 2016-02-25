@@ -53,8 +53,8 @@ export class DjangoRestConfig {
     // "regex": "regex",
     // "slug":
     // "integer": "integer",
-    // "float":
-    // "decimal":
+    // "float": "float",
+    // "decimal": "decimal",
     // "date":
     // "datetime":
     // "time":
@@ -69,6 +69,8 @@ export class DjangoRestConfig {
     "boolean"   : fields.BooleanField,
 
     "integer"   : fields.NumericField,
+    "decimal"   : fields.DecimalField,
+    "float"     : fields.FloatField,
 
     "string"    : fields.CharField,
     "text"      : fields.TextField,

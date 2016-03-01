@@ -15,9 +15,14 @@ Just install it with `npm`:
 
 This will install `django-rest-formly` globall and let you using the cli tool from anywhere.
 
+** P.S: ** It's recommended to use ``VerboseMetadata`` class of 
+[djangorestframework-utils](https://github.com/benzid-wael/django-rest-framework-utils) package, to explore all features
+of this project.
+
 ## Usage
 
-This package install a command line tool that let you render ``angular-formly`` fields' configuration for your `Django Rest Framework` endpoints.
+This package install a command line tool that let you render ``angular-formly`` fields' configuration for your
+`Django Rest Framework` endpoints.
 
 ### Arguments
 
@@ -28,13 +33,15 @@ This package install a command line tool that let you render ``angular-formly`` 
 - ``--root <PATH>``
   Specifies API root path (by default '/')
 - ``-c, --color``
-  Colorize the command output, this had effect only on ``list`` command or ``form`` command whent it's used with ``--prettify`` option
+  Colorize the command output, this had effect only on ``list`` command or ``form`` command whent it's used with
+  ``--prettify`` option
 - ``--prettify``
    Prettify the json output
 
 ### Listing endpoint
 
-The command `list` will list all existing endpoints for the specified API root (by default '/'). You can specify the API root with `--root` option. Note also, that you can change host (resp. port) value with `--host` (resp. `--port`) option.
+The command `list` will list all existing endpoints for the specified API root (by default '/'). You can specify the API
+root with `--root` option. Note also, that you can change host (resp. port) value with `--host` (resp. `--port`) option.
 
 ```shell
 $ django-rest-formly --host 192.168.99.100 --port 5000 --root /api
@@ -52,13 +59,19 @@ The output will be the form's configuration for endpoint located on `192.168.99.
 
 ## Project Status
 
-The project is already in development status, and not all fields are supported and there is a lot of things to improve. For the moment, we support the below fields:
+The project is already in development status, and not all fields are supported and there is a lot of things to improve.
+For the moment, we support the below fields:
 
 - IntegerField
 - BooleanField
 - CharField
 - EmailField
 - PasswordField
+- RegexField
+- URLField
+- IPAddressField
+- DecimalField
+- FloatField
 
 For further details, see [Change Log](CHANGELOG.md).
 

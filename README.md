@@ -78,6 +78,5 @@ For further details, see [Change Log](CHANGELOG.md).
 
 ## Contributing
 
-Contributions are welcome and appreciated. You can find ``django-rest-formly`` on GitHub, feel free to start
-an issue or create a pull requests:<br>
-[https://github.com/benzid-wael/django-rest-formly](https://github.com/benzid-wael/django-rest-formly)
+Contributions are welcome and appreciated. You can find [django-rest-formly](https://github.com/benzid-wael/django-rest-formly)
+on GitHub, feel free to start an issue or create a pull requests.

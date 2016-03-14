@@ -65,19 +65,21 @@ For the moment, we support the below fields:
 - IntegerField
 - BooleanField
 - CharField
-- EmailField
+- EmailField (``HTML5``)
 - PasswordField
-- RegexField
-- URLField
-- IPAddressField
+- RegexField (``HTML5``)
+- URLField (``HTML5``)
+- IPAddressField (``HTML5``)
 - DecimalField
 - FloatField
+- DateField (``HTML5``)
+- TimeField (``HTML5``)
+- DateTimeField (``HTML5``)
 
 For further details, see [Change Log](CHANGELOG.md).
 
 
 ## Contributing
 
-Contributions are welcome and appreciated. You can find ``django-rest-formly`` on GitHub, feel free to start
-an issue or create a pull requests:<br>
-[https://github.com/benzid-wael/django-rest-formly](https://github.com/benzid-wael/django-rest-formly)
+Contributions are welcome and appreciated. You can find [django-rest-formly](https://github.com/benzid-wael/django-rest-formly)
+on GitHub, feel free to start an issue or create a pull requests.

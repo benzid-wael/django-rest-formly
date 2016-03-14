@@ -62,6 +62,13 @@
           "required": true,
           "read_only": false
       },
+      "birthday": {
+          "type": "date",
+          "required": false,
+          "read_only": false,
+          "label": "Birthday",
+          "allow_null": true
+      },
       "email": {
           "type": "email",
           "required": true,
@@ -75,7 +82,7 @@
           "label": "You'll not see me ever"
       },
       "website": {
-          "type": "email",
+          "type": "url",
           "required": true,
           "read_only": false,
           "label": "Website"

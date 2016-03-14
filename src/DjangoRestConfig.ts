@@ -55,9 +55,9 @@ export class DjangoRestConfig {
     // "integer": "integer",
     // "float": "float",
     // "decimal": "decimal",
-    // "date":
-    // "datetime":
-    // "time":
+    // "date": "date",
+    // "datetime": "datetime",
+    // "time": "time",
     // "choice": "choice",
     // "multiple choice":
     // "file upload":
@@ -84,6 +84,10 @@ export class DjangoRestConfig {
     "email"     : fields.EmailField,
     "url"       : fields.URLField,
     "ipaddress" : fields.IPAddressField,
+
+     "date"     : fields.DateField,
+     "datetime" : fields.DateTimeField,
+     "time"     : fields.TimeField,
   };
 
   /**

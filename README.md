@@ -65,13 +65,16 @@ For the moment, we support the below fields:
 - IntegerField
 - BooleanField
 - CharField
-- EmailField
+- EmailField (``HTML5``)
 - PasswordField
-- RegexField
-- URLField
-- IPAddressField
+- RegexField (``HTML5``)
+- URLField (``HTML5``)
+- IPAddressField (``HTML5``)
 - DecimalField
 - FloatField
+- DateField (``HTML5``)
+- TimeField (``HTML5``)
+- DateTimeField (``HTML5``)
 
 For further details, see [Change Log](CHANGELOG.md).
 

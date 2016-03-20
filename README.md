@@ -68,3 +68,6 @@ For further details, see [Change Log](CHANGELOG.md).
 Contributions are welcome and appreciated. You can find ``django-rest-formly`` on GitHub, feel free to start
 an issue or create a pull requests:<br>
 [https://github.com/benzid-wael/django-rest-formly](https://github.com/benzid-wael/django-rest-formly)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/benzid-wael/django-rest-formly/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

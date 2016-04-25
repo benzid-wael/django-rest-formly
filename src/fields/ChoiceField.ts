@@ -26,8 +26,8 @@ export abstract class ChoiceField extends base.Field implements IChoiceField, ba
   choices: Array<interfaces.IDjangoRestOption>;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
-    this.choices = <Array<interfaces.IDjangoRestOption>> options.choices;
     super(options);
+    this.choices = <Array<interfaces.IDjangoRestOption>> options.choices;
   }
 
   protected getExtraTemplateOptions() {

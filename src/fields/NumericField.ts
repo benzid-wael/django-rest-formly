@@ -28,9 +28,9 @@ export class NumericField extends base.Field implements INumericField {
   maxValue: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
     this.minValue = options.min_value;
     this.maxValue = options.max_value;
-    super(options);
   }
 
   protected getExtraTemplateOptions() {
@@ -52,9 +52,9 @@ export class DecimalField extends NumericField {
   decimalPlaces : number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
     this.maxDigits = options.max_digits;
     this.decimalPlaces = options.decimal_places;
-    super(options);
   }
 
   protected getExtraTemplateOptions() {

@@ -50,9 +50,9 @@ export class CharField extends base.Field implements ICharField {
   maxLength: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
     this.minLength = options.min_length;
     this.maxLength = options.max_length;
-    super(options);
   }
 
   protected getExtraTemplateOptions() {
@@ -71,8 +71,8 @@ export class TextField extends CharField implements ITextField {
   rows: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
-    this.rows = 2;  // default angular-formly value
     super(options);
+    this.rows = 2;  // default angular-formly value
   }
 
   protected getExtraTemplateOptions() {
@@ -91,8 +91,8 @@ export class RegexField extends CharField implements IRegexField {
   pattern: string;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
-    this.pattern = options.pattern || this.pattern;
     super(options);
+    this.pattern = options.pattern || this.pattern;
   }
 
   protected getExtraTemplateOptions() {

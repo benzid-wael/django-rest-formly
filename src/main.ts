@@ -28,11 +28,17 @@ export class Converter {
       configObjects.push(field.getConfigurationObject());
     });
     return configObjects;
-  };
+  }
 }
 
 
 export var toFormlyFields = function toFormlyFieldsF(djangoRestMeta: Array<IDjangoRestFieldOptions>, fieldFactoryFn?: IFieldFactory) {
+  console.log("toFormlyFields is deprecated, please use toFormly instead")
+  var converter = new Converter(djangoRestMeta, fieldFactoryFn);
+  return converter.convert();
+};
+
+export var toFormly = function toFormlyF(djangoRestMeta: Array<IDjangoRestFieldOptions>, fieldFactoryFn?: IFieldFactory) {
   var converter = new Converter(djangoRestMeta, fieldFactoryFn);
   return converter.convert();
 };

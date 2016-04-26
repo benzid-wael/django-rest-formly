@@ -36,7 +36,7 @@
       }
     };
 
-    vm.fields = DjangoRestFormly.toFormlyFields({
+    vm.fields = DjangoRestFormly.toFormly({
       "first_name": {
           "type": "string",
           label: "First Name",

@@ -18,7 +18,10 @@ var gulp       = require('gulp'),
   source       = require('vinyl-source-stream'),
   mocha        = require("gulp-mocha"),
   typedoc      = require("gulp-typedoc"),
-  yuidoc       = require("gulp-yuidoc");
+  yuidoc       = require("gulp-yuidoc"),
+  uglify       = require('gulp-uglify'),
+  sourcemaps   = require('gulp-sourcemaps'),
+  rename       = require('gulp-rename');
 
 
 var sources = {
@@ -78,9 +81,17 @@ gulp.task('js:app', function() {
 
   browserifyStream
     .pipe(concat(destinations.filename + '.js'))
+    .pipe(gulp.dest(destinations.js))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        .on('error', util.log)
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(destinations.js));
 });
-
+  
 // deletes the dist folder for a clean build
 gulp.task('clean', function() {
   del(['./dist'], function(err, deletedFiles) {

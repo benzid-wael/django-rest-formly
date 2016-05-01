@@ -1,6 +1,6 @@
 {
   "name": "django-rest-formly",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Wael BEN ZID <benzid.wael@hotmail.fr>",
   "repository": {
     "type": "git",
@@ -41,6 +41,7 @@
     "test": "mocha --recursive"
   },
   "devDependencies": {
+    "@lib/autodts-generator": "~0.0.1",
     "autodts": "0.0.6",
     "bower": "~1.6.8",
     "browserify": "^12.0.1",
@@ -66,7 +67,6 @@
     "typescript": "~1.7.3",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "@lib/autodts-generator": "~0.0.1"
+    "vinyl-source-stream": "^1.1.0"
   }
 }

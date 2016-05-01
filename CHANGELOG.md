@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.3] - 2016-04-26
+### Fixed
+- Incompatibility with TypeScript 1.8
+
+### Updated
+- ``toFormlyField`` marked as deprecated (use ``toFormly`` instead)
+
+### Added
+- Support of DRF ``DateTimeField``
+- Support of DRF ``DateField``
+- Support of DRF ``TimeField``
+- Support of DRF ``FloatField``
+- Support of DRF ``DecimalField`` (requires `djangorestframework-utils`_ 0.0.1+)
+- Support of DRF ``IPAddressField``
+- Support of DRF ``URLField``
+- Support of DRF ``RegexField`` (requires `djangorestframework-utils`_ 0.0.1+)
+
+
 ## [0.0.2] - 2016-01-27
 ### Fixed
 - bad definition for `EmailField`, `HiddenField`, `PasswordField` fields
@@ -24,5 +42,5 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Support of Django REST ``PasswordField``
 
 
-
+.. _djangorestframework-utils: http://github.com/benzid-wael/djangorestframework-utils
 

@@ -20,6 +20,15 @@ var djnagoRestFieldLookup = [
     }
   },
   (djangoRestMeta:IDjangoRestFieldOptions) => {
+    if (djangoRestMeta.type == "regex") {
+      if (djangoRestMeta.pattern == undefined) {
+        console.warn('regex field should define pattern property. \'' + djangoRestMeta.name + '\' field will be treated as string.');
+        return "string";
+      }
+      return "regex";
+    }
+  },
+  (djangoRestMeta:IDjangoRestFieldOptions) => {
     if (djangoRestMeta.type == "string" && djangoRestMeta.max_length == undefined) {
       return "text";
     } else if (djangoRestMeta.type == "string") {
@@ -34,21 +43,21 @@ var djnagoRestFieldLookup = [
  */
 export class DjangoRestConfig {
 
-    // DjangoRest field types list
+    // DjangoRest field types list:
     // "field":
     // "boolean": "boolean",
-    // "null boolean":
+    // "null boolean": "boolean",
     // "string": "string",  // if there is no max_length property, so we had to returns "text" aka. TextField
     // "url":
     // "email": "email",
-    // "regex":
+    // "regex": "regex",
     // "slug":
     // "integer": "integer",
-    // "float":
-    // "decimal":
-    // "date":
-    // "datetime":
-    // "time":
+    // "float": "float",
+    // "decimal": "decimal",
+    // "date": "date",
+    // "datetime": "datetime",
+    // "time": "time",
     // "choice": "choice",
     // "multiple choice":
     // "file upload":
@@ -58,15 +67,27 @@ export class DjangoRestConfig {
 
   private static _fieldMapping: any = {
     "boolean"   : fields.BooleanField,
-    "email"     : fields.EmailField,
-    "hidden"    : fields.HiddenField,
-    "password"  : fields.PasswordField,
+
+    "integer"   : fields.NumericField,
+    "decimal"   : fields.DecimalField,
+    "float"     : fields.FloatField,
+
     "string"    : fields.CharField,
     "text"      : fields.TextField,
+    "hidden"    : fields.HiddenField,
+    "password"  : fields.PasswordField,
+
     "select"    : fields.SelectField,
-    "radio"     : fields.RadioField,
     "choice"    : fields.SelectField,  // By default, returns a SelectField for choice fields
-    "integer"   : fields.NumericField
+    "radio"     : fields.RadioField,
+    "regex"     : fields.RegexField,
+    "email"     : fields.EmailField,
+    "url"       : fields.URLField,
+    "ipaddress" : fields.IPAddressField,
+
+     "date"     : fields.DateField,
+     "datetime" : fields.DateTimeField,
+     "time"     : fields.TimeField,
   };
 
   /**

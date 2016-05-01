@@ -30,6 +30,14 @@ export interface ITextField extends ICharField {
 }
 
 
+export interface IRegexField extends ICharField {
+
+  /**
+  * Specifies the rows attribute for the textarea element.
+  */
+  pattern: string;
+}
+
 /**
  * Base string field class. The default form widget for this type is "input".
  * CharField has two extra optional arguments: `minLength` and `maxLength`.
@@ -42,9 +50,9 @@ export class CharField extends base.Field implements ICharField {
   maxLength: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
     this.minLength = options.min_length;
     this.maxLength = options.max_length;
-    super(options);
   }
 
   protected getExtraTemplateOptions() {
@@ -63,8 +71,8 @@ export class TextField extends CharField implements ITextField {
   rows: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
-    this.rows = 2;  // default angular-formly value
     super(options);
+    this.rows = 2;  // default angular-formly value
   }
 
   protected getExtraTemplateOptions() {
@@ -72,6 +80,26 @@ export class TextField extends CharField implements ITextField {
       super.getExtraTemplateOptions(),
       {
         rows: this.rows
+      }
+    );
+  }
+}
+
+
+export class RegexField extends CharField implements IRegexField {
+
+  pattern: string;
+
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
+    this.pattern = options.pattern || this.pattern;
+  }
+
+  protected getExtraTemplateOptions() {
+    return utils.extend(
+      super.getExtraTemplateOptions(),
+      {
+        pattern: this.pattern
       }
     );
   }
@@ -100,4 +128,18 @@ export class PasswordField extends CharField {
 export class HiddenField extends CharField {
 
   protected static templateType: string = 'hidden';
+}
+
+
+export class URLField extends RegexField {
+
+  protected static templateType: string = 'url';
+  pattern: string = '(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?';
+
+}
+
+
+export class IPAddressField extends RegexField {
+
+  pattern: string = '^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$';
 }

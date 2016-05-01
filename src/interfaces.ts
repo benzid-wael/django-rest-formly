@@ -76,4 +76,15 @@ export interface IDjangoRestFieldOptions {
    * The maximum value.
    */
   max_value?: number;
+
+  /**
+   * Pattern to be verified.
+   */
+  pattern?: string;
+
+  /**
+   * Properties for decimal field
+   */
+  max_digits?: number;
+  decimal_places?: number;
 }

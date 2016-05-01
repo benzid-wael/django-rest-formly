@@ -28,15 +28,49 @@ export class NumericField extends base.Field implements INumericField {
   maxValue: number;
 
   constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
     this.minValue = options.min_value;
     this.maxValue = options.max_value;
-    super(options);
   }
 
   protected getExtraTemplateOptions() {
     return utils.smartExtend({}, {
       min: this.minValue,
       max: this.maxValue
+    });
+  }
+}
+
+
+export class DecimalField extends NumericField {
+
+  protected static fieldType: string = 'input';
+  protected static templateType: string = 'number';
+  minValue      : number;
+  maxValue      : number;
+  maxDigits     : number;
+  decimalPlaces : number;
+
+  constructor(options: interfaces.IDjangoRestFieldOptions) {
+    super(options);
+    this.maxDigits = options.max_digits;
+    this.decimalPlaces = options.decimal_places;
+  }
+
+  protected getExtraTemplateOptions() {
+    // FIXME handle decimal_places attr
+    return utils.smartExtend(super.getExtraTemplateOptions(), {
+      maxlength: this.maxDigits
+    });
+  }
+}
+
+
+export class FloatField extends NumericField {
+
+  protected getExtraTemplateOptions() {
+    return utils.smartExtend(super.getExtraTemplateOptions(), {
+      'step': 'any'
     });
   }
 }

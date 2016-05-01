@@ -19,6 +19,7 @@ program
   .option('-S, --no-suffix', "Turn off appending '.json' to endpoints URIs")
   .option('-c, --color', "Colorize the command output")
   .option('-s, --indent-size <n>', "Specify indentation size.")
+  .option('-o, --output <FILE>', "Specify output file.")
   .parse(process.argv);
 
 program
@@ -33,6 +34,7 @@ program
       noColor  : !program.color,
       noSuffix : !program.suffix,
       indent   : program.indentSize,
+      output   : program.output,
     }).listEndpoints();
   });
 
@@ -50,6 +52,7 @@ program
       noSuffix : !program.suffix,
       json     : !options.prettify,
       indent   : program.indentSize,
+      output   : program.output,
     }).generateFormScheme(name);
   });
 

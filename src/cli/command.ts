@@ -3,6 +3,7 @@
 import http = require("http");
 import path = require("path");
 import chalk = require("chalk");
+import fs = require("fs");
 import prettyjson = require("prettyjson");
 import AngularFormly = require("angular-formly");
 
@@ -52,6 +53,7 @@ export interface ICommandOptions {
   noSuffix    ?: boolean;
   endpoint    ?: string;
   json        ?: boolean;
+  output      ?: string;
 }
 
 
@@ -67,6 +69,7 @@ export class DjangoRestFormlyCommand {
   noSuffix     : boolean;
   endpoint     : string;
   json         : boolean;
+  output       : string;
 
   constructor (options: ICommandOptions) {
     this.host       = options.host || "127.0.0.1";
@@ -90,10 +93,23 @@ export class DjangoRestFormlyCommand {
     this.noSuffix   = options.noSuffix;
     this.endpoint   = options.endpoint;
     this.json       = options.json;
+    this.output     = options.output || null;
   }
 
-  log(data: any) {
-    if (!this.json && data instanceof Object) {
+  log(data: any, debug: boolean = false) {
+    if (this.output) {
+      if (debug) {
+        return ;
+      }
+      var output = JSON2.stringify(data, null, this.indent);
+      fs.writeFile(this.output, output, function(err) {
+        if (err) {
+          return console.error(chalk.red(err.toString()));
+        } else {
+          console.info(chalk.green("Finished"));
+        }
+      });
+    } else if (!this.json && data instanceof Object) {
       var options : any;
       if (!this.noColor) {
         options = {
@@ -179,7 +195,7 @@ export class DjangoRestFormlyCommand {
 
     callback = function(raw) {
       var data = JSON.parse(raw);
-      vm.log("Available endpoints:");
+      vm.log("Available endpoints:", true);  // don't redirect it to output file
       vm.log(data);
     };
 

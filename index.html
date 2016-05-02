@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="django-rest-formly : Generate angular-formly form configuration object for Django REST endpoints.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>django-rest-formly</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/benzid-wael/django-rest-formly">View on GitHub</a>
+
+          <h1 id="project_title">django-rest-formly</h1>
+          <h2 id="project_tagline">Generate angular-formly form configuration object for Django REST endpoints.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/benzid-wael/django-rest-formly/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/benzid-wael/django-rest-formly/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="django-rest-formly" class="anchor" href="#django-rest-formly" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>django-rest-formly</h1>
+
+<p><a href="https://www.npmjs.org/package/django-rest-formly"><img src="https://img.shields.io/npm/v/django-rest-formly.svg?style=flat-square" alt="npm version"></a>
+<a href="http://npm-stat.com/charts.html?package=django-rest-formly&amp;from=2016-01-01"><img src="https://img.shields.io/npm/dm/django-rest-formly.svg?style=flat-square" alt="npm downloads"></a>
+<a href="https://travis-ci.org/benzid-wael/django-rest-formly"><img src="https://travis-ci.org/benzid-wael/django-rest-formly.svg" alt="Build Status"></a>
+<a href="https://david-dm.org/benzid-wael/django-rest-formly"><img src="https://img.shields.io/david/benzid-wael/django-rest-formly.svg" alt="David"></a>
+<a href="https://david-dm.org/benzid-wael/django-rest-formly"><img src="https://img.shields.io/david/dev/benzid-wael/django-rest-formly.svg" alt="David"></a></p>
+
+<h2>
+<a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to install</h2>
+
+<p>Just install it with <code>npm</code>:</p>
+
+<pre><code>    npm install -g django-rest-formly
+</code></pre>
+
+<p>This will install <code>django-rest-formly</code> globall and let you using the cli tool from anywhere.</p>
+
+<p>** P.S: ** It's recommended to use <code>VerboseMetadata</code> class of 
+<a href="https://github.com/benzid-wael/djangorestframework-utils">djangorestframework-utils</a> package,
+to explore all features of this project.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>This package install a command line tool that let you render <code>angular-formly</code> fields'
+configuration for your <code>Django Rest Framework</code> endpoints.</p>
+
+<h3>
+<a id="arguments" class="anchor" href="#arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h3>
+
+<ul>
+<li>
+<code>-h, --host &lt;HOST&gt;</code>
+Specifies host address (by default: 127.0.0.1)</li>
+<li>
+<code>-p, --port &lt;PORT&gt;</code>
+Specifies port number (by default 8000)</li>
+<li>
+<code>--root &lt;PATH&gt;</code>
+Specifies API root path (by default '/')</li>
+<li>
+<code>-c, --color</code>
+Colorize the command output, this option has effect only on the <code>list</code> command or
+the <code>form</code> command when it's used with <code>--prettify</code> option</li>
+<li>
+<code>--prettify</code>
+Prettify the json output</li>
+</ul>
+
+<h3>
+<a id="listing-endpoint" class="anchor" href="#listing-endpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Listing endpoint</h3>
+
+<p>The command <code>list</code> will list all existing endpoints for the specified API root 
+(by default '/'). You can specify the API root with <code>--root</code> option. Note also, 
+that you can change host (resp. port) value with <code>--host</code> (resp. <code>--port</code>) option.</p>
+
+<div class="highlight highlight-source-shell"><pre>$ django-rest-formly --host 192.168.99.100 --port 5000 --root /api</pre></div>
+
+<h3>
+<a id="generate-formly-form-configuration" class="anchor" href="#generate-formly-form-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generate Formly form configuration</h3>
+
+<p>The command <code>form</code> will generate <code>angular-formly</code>'s form configuration for the 
+specified endpoint, example:</p>
+
+<div class="highlight highlight-source-shell"><pre>$ django-rest-formly --host 192.168.99.100 --port 5000 --root /api users</pre></div>
+
+<p>The output will be the form's configuration for endpoint located on <code>192.168.99.100:5000/api/users</code></p>
+
+<h2>
+<a id="project-status" class="anchor" href="#project-status" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Status</h2>
+
+<p>The project is already in development status, and not all fields are supported 
+and there is a lot of things to improve. For the moment, we support the below fields:</p>
+
+<ul>
+<li>IntegerField</li>
+<li>BooleanField</li>
+<li>CharField</li>
+<li>EmailField (<code>HTML5</code>)</li>
+<li>PasswordField</li>
+<li>RegexField (<code>HTML5</code>)</li>
+<li>URLField (<code>HTML5</code>)</li>
+<li>IPAddressField (<code>HTML5</code>)</li>
+<li>DecimalField</li>
+<li>FloatField</li>
+<li>DateField (<code>HTML5</code>)</li>
+<li>TimeField (<code>HTML5</code>)</li>
+<li>DateTimeField (<code>HTML5</code>)</li>
+</ul>
+
+<p>For further details, see <a href="CHANGELOG.md">Change Log</a>.</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Contributions are welcome and appreciated. You can find 
+<a href="https://github.com/benzid-wael/django-rest-formly">django-rest-formly</a>
+on GitHub, feel free to start an issue or create a pull requests.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">django-rest-formly maintained by <a href="https://github.com/benzid-wael">benzid-wael</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
